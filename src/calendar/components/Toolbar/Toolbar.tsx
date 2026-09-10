@@ -4,11 +4,38 @@ import styles from './Toolbar.module.css'
 interface ToolbarProps {
   view: CalendarView
   onViewChange: (view: CalendarView) => void
+  onPrevious: () => void
+  onToday: () => void
+  onNext: () => void
 }
 
-export function Toolbar({ view, onViewChange }: ToolbarProps) {
+export function Toolbar({ view, onViewChange, onPrevious, onToday, onNext }: ToolbarProps) {
   return (
-    <div className={styles.toolbar}>
+    <div>
+        <div className={styles.toolbarButtons}>
+      <button
+        type="button"
+        onClick={onPrevious}
+      >
+        Previous
+      </button>
+
+      <button
+        type="button"
+        onClick={onToday}
+      >
+        Today
+      </button>
+
+      <button
+        type="button"
+        onClick={onNext}
+      >
+        Next
+      </button>
+        </div>
+
+<div className={styles.toolbarButtons}>
       <button
         type="button"
         onClick={() => onViewChange('month')}
@@ -32,6 +59,8 @@ export function Toolbar({ view, onViewChange }: ToolbarProps) {
       >
         Day
       </button>
+</div>
+
     </div>
   )
 }

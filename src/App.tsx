@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import { Calendar } from './calendar'
-import type { CalendarView } from './calendar/types/calendar'
+import type { CalendarDate, CalendarView } from './calendar/types/calendar'
+import { getToday } from './calendar/core/date';
 
 function App() {
-  const [view, setView] = useState<CalendarView>('month')
+  const [view, setView] = useState<CalendarView>('month');
+const [date, setDate] = useState<CalendarDate>(getToday());
 
   return (
     <main>
-      <Calendar
-        view={view}
-        onViewChange={setView}
-      />
+<Calendar
+  view={view}
+  date={date}
+  onViewChange={setView}
+  onDateChange={setDate}
+/>
     </main>
   )
 }
