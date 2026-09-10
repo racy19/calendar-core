@@ -1,9 +1,10 @@
 
-function App() {
+import { Calendar } from './calendar'
 
+function App() {
   return (
     <main>
-      <h1>Calendar</h1>
+      <Calendar />
     </main>
   )
 }
