@@ -1,5 +1,11 @@
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+}
+
 .day {
-  min-height: 100px;
+  min-height: 200px;
   padding: 0.5rem;
   border: 1px solid #ddd;
   background: none;
@@ -7,10 +13,6 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
-}
-
-.day[data-current-month='false'] {
-  opacity: 0.4;
 }
 
 .day[data-today='true'] {

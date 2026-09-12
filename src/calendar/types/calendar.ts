@@ -17,3 +17,8 @@ export interface MonthDay {
   day: number
   isCurrentMonth: boolean
 }
+
+export interface WeekDay {
+  date: CalendarDate
+  day: number
+}

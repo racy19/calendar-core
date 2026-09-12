@@ -5,16 +5,19 @@ import { getToday } from './calendar/core/date';
 
 function App() {
   const [view, setView] = useState<CalendarView>('month');
-const [date, setDate] = useState<CalendarDate>(getToday());
+  const [date, setDate] = useState<CalendarDate>(getToday());
 
   return (
     <main>
-<Calendar
-  view={view}
-  date={date}
-  onViewChange={setView}
-  onDateChange={setDate}
-/>
+      <Calendar
+        view={view}
+        date={date}
+        onViewChange={setView}
+        onDateChange={setDate}
+        onDayClick={(date) => {
+          console.log('Clicked day:', date)
+        }}
+      />
     </main>
   )
 }

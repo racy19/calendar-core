@@ -1,0 +1,1 @@
+export { getWeekDays } from './week'

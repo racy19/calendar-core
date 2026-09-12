@@ -1,6 +1,7 @@
 .day {
-  min-height: 100px;
-  padding: 0.5rem;
+  width: 100%;
+  min-height: 400px;
+  padding: 1rem;
   border: 1px solid #ddd;
   background: none;
   color: inherit;
@@ -9,12 +10,7 @@
   cursor: pointer;
 }
 
-.day[data-current-month='false'] {
-  opacity: 0.4;
-}
-
 .day[data-today='true'] {
-  font-weight: 700;
   outline: 2px solid currentColor;
   outline-offset: -2px;
 }
