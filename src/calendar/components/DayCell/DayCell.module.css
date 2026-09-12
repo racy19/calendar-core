@@ -1,0 +1,15 @@
+.day {
+  min-height: 100px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.day[data-current-month='false'] {
+  opacity: 0.4;
+}
+
+.day[data-today='true'] {
+  font-weight: 700;
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}

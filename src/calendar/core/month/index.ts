@@ -1,0 +1,1 @@
+export { getMonthDays } from './month'

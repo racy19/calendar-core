@@ -9,3 +9,11 @@ export type CalendarView = 'month' | 'week' | 'day'
 export type CalendarDate = string
 
 export type CalendarDateUnit = 'day' | 'week' | 'month' | 'year'
+
+export type FirstDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6
+
+export interface MonthDay {
+  date: CalendarDate
+  day: number
+  isCurrentMonth: boolean
+}
