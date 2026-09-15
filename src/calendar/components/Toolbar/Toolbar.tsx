@@ -1,66 +1,78 @@
 import type { CalendarView } from '../../types/calendar'
+
 import styles from './Toolbar.module.css'
 
 interface ToolbarProps {
   view: CalendarView
+  periodLabel: string
+
   onViewChange: (view: CalendarView) => void
   onPrevious: () => void
   onToday: () => void
   onNext: () => void
 }
 
-export function Toolbar({ view, onViewChange, onPrevious, onToday, onNext }: ToolbarProps) {
+export function Toolbar({
+  view,
+  periodLabel,
+  onViewChange,
+  onPrevious,
+  onToday,
+  onNext,
+}: ToolbarProps) {
   return (
-    <div>
-        <div className={styles.toolbarButtons}>
-      <button
-        type="button"
-        onClick={onPrevious}
-      >
-        Previous
-      </button>
+    <div className={styles.toolbar}>
+            <div className={styles.views}>
+        <button
+          type="button"
+          data-active={view === 'month'}
+          onClick={() => onViewChange('month')}
+        >
+          Month
+        </button>
 
-      <button
-        type="button"
-        onClick={onToday}
-      >
-        Today
-      </button>
+        <button
+          type="button"
+          data-active={view === 'week'}
+          onClick={() => onViewChange('week')}
+        >
+          Week
+        </button>
 
-      <button
-        type="button"
-        onClick={onNext}
-      >
-        Next
-      </button>
+        <button
+          type="button"
+          data-active={view === 'day'}
+          onClick={() => onViewChange('day')}
+        >
+          Day
+        </button>
+      </div>
+      <div className={styles.navigation}>
+        <button
+          type="button"
+          onClick={onPrevious}
+          aria-label="Previous period"
+        >
+          &lt;
+        </button>
+
+        <div className={styles.period}>
+          {periodLabel}
         </div>
 
-<div className={styles.toolbarButtons}>
-      <button
-        type="button"
-        onClick={() => onViewChange('month')}
-        disabled={view === 'month'}
-      >
-        Month
-      </button>
-
-      <button
-        type="button"
-        onClick={() => onViewChange('week')}
-        disabled={view === 'week'}
-      >
-        Week
-      </button>
-
-      <button
-        type="button"
-        onClick={() => onViewChange('day')}
-        disabled={view === 'day'}
-      >
-        Day
-      </button>
-</div>
-
+        <button
+          type="button"
+          onClick={onNext}
+          aria-label="Next period"
+        >
+          &gt;
+        </button>
+      </div>
+      <div className={styles.right}>
+        <button type="button" onClick={onToday}>
+          Today
+        </button>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,72 @@
 .calendar {
+  /* Colors */
+  --calendar-background: #ffffff;
+  --calendar-surface: #ffffff;
+  --calendar-surface-hover: #f8fafc;
+
+  --calendar-text: #0f172a;
+  --calendar-text-muted: #64748b;
+
+  --calendar-border: #e2e8f0;
+  --calendar-border-strong: #cbd5e1;
+
+  --calendar-primary: #2563eb;
+  --calendar-primary-hover: #1d4ed8;
+  --calendar-primary-text: #ffffff;
+
+  --calendar-today: #2563eb;
+  --calendar-today-background: #eff6ff;
+
+  /* Layout */
+  --calendar-radius: 0.75rem;
+  --calendar-cell-radius: 0;
+  --calendar-spacing: 0.5rem;
+
+  --calendar-day-min-height: 100px;
+
+  /* Typography */
+  --calendar-font-family: system-ui, sans-serif;
+  --calendar-font-size: 0.875rem;
+
+  /* Effects */
+  --calendar-shadow:
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 1px 3px rgb(0 0 0 / 0.08);
+
   width: 100%;
-  padding: 1rem;
+  overflow: hidden;
+
+  background: var(--calendar-background);
+  color: var(--calendar-text);
+
+  border: 1px solid var(--calendar-border);
+  border-radius: var(--calendar-radius);
+
+  box-shadow: var(--calendar-shadow);
+
+  font-family: var(--calendar-font-family);
+  font-size: var(--calendar-font-size);
+}
+
+.calendar[data-theme='dark'] {
+  --calendar-background: #0f172a;
+  --calendar-surface: #111827;
+  --calendar-surface-hover: #1e293b;
+
+  --calendar-text: #f8fafc;
+  --calendar-text-muted: #94a3b8;
+
+  --calendar-border: #334155;
+  --calendar-border-strong: #475569;
+
+  --calendar-primary: #60a5fa;
+  --calendar-primary-hover: #93c5fd;
+  --calendar-primary-text: #0f172a;
+
+  --calendar-today: #60a5fa;
+  --calendar-today-background: #172554;
+
+  --calendar-heat-text: #ffffff;
+
+  --calendar-shadow: none;
 }
