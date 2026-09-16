@@ -58,5 +58,10 @@ export function formatPeriodLabel(
 
       return formatter.formatRange(startDate, endDate)
     }
+
+    case 'year':
+      return new Intl.DateTimeFormat(locale, {
+        year: 'numeric',
+      }).format(parsedDate)
   }
 }

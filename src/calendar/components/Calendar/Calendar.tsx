@@ -1,16 +1,21 @@
 import { getToday } from '../../core/date'
 import { formatPeriodLabel } from '../../core/format'
 import { getNextDate, getPreviousDate } from '../../core/navigation'
-import type { CalendarDate, CalendarView, FirstDayOfWeek } from '../../types/calendar'
+import type { CalendarAccent, CalendarDate, CalendarTheme, CalendarView, FirstDayOfWeek } from '../../types/calendar'
 import { DayView } from '../DayView'
 import { MonthView } from '../MonthView'
 import { Toolbar } from '../Toolbar'
 import { WeekView } from '../WeekView'
+import { YearView } from '../YearView/YearView'
 import styles from './Calendar.module.css'
 
 interface CalendarProps {
   view: CalendarView
   date: CalendarDate
+
+  theme?: CalendarTheme
+  accent?: CalendarAccent
+
   firstDayOfWeek?: FirstDayOfWeek
   locale?: string
 
@@ -19,15 +24,29 @@ interface CalendarProps {
   onDayClick?: (date: CalendarDate) => void
 }
 
-export function Calendar({ view, date, firstDayOfWeek = 1, locale, onViewChange, onDateChange, onDayClick }: CalendarProps) {
-  const periodLabel = formatPeriodLabel(
-  date,
+export function Calendar({
   view,
+  date,
+  theme = 'light',
+  accent = 'gray',
+  firstDayOfWeek = 1,
   locale,
-  firstDayOfWeek,
-)
+  onViewChange,
+  onDateChange,
+  onDayClick
+}: CalendarProps) {
+  const periodLabel = formatPeriodLabel(
+    date,
+    view,
+    locale,
+    firstDayOfWeek,
+  )
   return (
-    <div className={styles.calendar}>
+    <div
+      className={styles.calendar}
+      data-theme={theme}
+      data-accent={accent}
+    >
       <Toolbar
         view={view}
         onViewChange={onViewChange}
@@ -38,6 +57,14 @@ export function Calendar({ view, date, firstDayOfWeek = 1, locale, onViewChange,
       />
 
       <div>
+        {view === 'year' && (
+          <YearView
+            date={date}
+            firstDayOfWeek={firstDayOfWeek}
+            locale={locale}
+            onDayClick={onDayClick}
+          />
+        )}
         {view === 'month' && (
           <MonthView
             date={date}

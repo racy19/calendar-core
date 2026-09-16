@@ -21,7 +21,9 @@ export function DayCell({
       data-today={isToday}
       onClick={onClick}
     >
-      {day.day}
+      <span className={styles.dayNumber}>
+        {day.day}
+      </span>
     </button>
   )
 }

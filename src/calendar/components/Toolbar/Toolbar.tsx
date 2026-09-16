@@ -22,7 +22,14 @@ export function Toolbar({
 }: ToolbarProps) {
   return (
     <div className={styles.toolbar}>
-            <div className={styles.views}>
+      <div className={styles.views}>
+        <button
+          type="button"
+          data-active={view === 'year'}
+          onClick={() => onViewChange('year')}
+        >
+          Year
+        </button>
         <button
           type="button"
           data-active={view === 'month'}

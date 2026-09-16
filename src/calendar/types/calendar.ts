@@ -1,4 +1,4 @@
-export type CalendarView = 'month' | 'week' | 'day'
+export type CalendarView = 'year' | 'month' | 'week' | 'day'
 
 /**
  * Calendar day represented as YYYY-MM-DD.
@@ -22,3 +22,9 @@ export interface WeekDay {
   date: CalendarDate
   day: number
 }
+
+export type MonthViewVariant = 'default' | 'compact'
+
+export type CalendarTheme = 'light' | 'dark'
+
+export type CalendarAccent = 'gray' |'blue' | 'green'

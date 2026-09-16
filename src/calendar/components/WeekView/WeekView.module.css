@@ -16,7 +16,9 @@
 }
 
 .day[data-today='true'] {
+  background: var(--calendar-today-background);
+  color: var(--calendar-text);
   font-weight: 700;
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--calendar-today);
   outline-offset: -2px;
 }

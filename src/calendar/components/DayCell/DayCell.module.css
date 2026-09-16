@@ -28,5 +28,17 @@
 
 .day[data-today='true'] {
   background: var(--calendar-today-background);
-  box-shadow: inset 0 0 0 2px var(--calendar-today);
+  outline: 2px solid var(--calendar-today);
+  outline-offset: -2px;
+}
+
+.dayNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--calendar-day-number-size);
+  height: var(--calendar-day-number-size);
+
+  font-size: var(--calendar-day-font-size);
 }

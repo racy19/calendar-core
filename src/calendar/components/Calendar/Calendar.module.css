@@ -1,8 +1,10 @@
 .calendar {
   /* Colors */
-  --calendar-background: #ffffff;
+  /* Base light gray theme */
+  --calendar-background: #f8fafc;
   --calendar-surface: #ffffff;
-  --calendar-surface-hover: #f8fafc;
+  --calendar-control-background: #ffffff;
+  --calendar-surface-hover: #f1f5f9;
 
   --calendar-text: #0f172a;
   --calendar-text-muted: #64748b;
@@ -10,12 +12,14 @@
   --calendar-border: #e2e8f0;
   --calendar-border-strong: #cbd5e1;
 
-  --calendar-primary: #2563eb;
-  --calendar-primary-hover: #1d4ed8;
+  /* Default gray accent */
+  --calendar-primary: #475569;
   --calendar-primary-text: #ffffff;
 
-  --calendar-today: #2563eb;
-  --calendar-today-background: #eff6ff;
+  --calendar-today: #475569;
+  --calendar-today-background: #f1f5f9;
+
+  --calendar-event-text: #475569;
 
   /* Layout */
   --calendar-radius: 0.75rem;
@@ -48,9 +52,11 @@
   font-size: var(--calendar-font-size);
 }
 
+/* Dark + gray */
 .calendar[data-theme='dark'] {
   --calendar-background: #0f172a;
   --calendar-surface: #111827;
+  --calendar-control-background: #111827;
   --calendar-surface-hover: #1e293b;
 
   --calendar-text: #f8fafc;
@@ -59,14 +65,53 @@
   --calendar-border: #334155;
   --calendar-border-strong: #475569;
 
-  --calendar-primary: #60a5fa;
-  --calendar-primary-hover: #93c5fd;
+  --calendar-primary: #94a3b8;
+  --calendar-primary-text: #0f172a;
+
+  --calendar-today: #94a3b8;
+  --calendar-today-background: #1e293b;
+
+  --calendar-event-text: #cbd5e1;
+}
+
+/* Light + blue */
+.calendar[data-accent='blue'] {
+  --calendar-primary: #2563eb;
+  --calendar-primary-text: #ffffff;
+
+  --calendar-today: #2563eb;
+  --calendar-today-background: #eff6ff;
+
+  --calendar-event-text: #2563eb;}
+
+/* Light + green */
+.calendar[data-accent='green'] {
+  --calendar-primary: #16a34a;
+  --calendar-primary-text: #ffffff;
+
+  --calendar-today: #16a34a;
+  --calendar-today-background: #f0fdf4;
+
+  --calendar-event-text: #15803d;}
+
+/* Dark + blue */
+.calendar[data-theme='dark'][data-accent='blue'] {
+    --calendar-primary: #60a5fa;
   --calendar-primary-text: #0f172a;
 
   --calendar-today: #60a5fa;
   --calendar-today-background: #172554;
 
-  --calendar-heat-text: #ffffff;
+  --calendar-event-text: #60a5fa;
+}
 
-  --calendar-shadow: none;
+/* Dark + green */
+.calendar[data-theme='dark'][data-accent='green'] {
+  --calendar-primary: #4ade80;
+  --calendar-primary-text: #052e16;
+
+  --calendar-today: #4ade80;
+  --calendar-today-background: #14532d;
+
+  --calendar-event-text: #4ade80;
 }
