@@ -1,10 +1,11 @@
-import type { CalendarView } from '../../types/calendar'
+import type { CalendarTranslations, CalendarView } from '../../types/calendar'
 
 import styles from './Toolbar.module.css'
 
 interface ToolbarProps {
   view: CalendarView
   periodLabel: string
+  translations: CalendarTranslations
 
   onViewChange: (view: CalendarView) => void
   onPrevious: () => void
@@ -15,57 +16,58 @@ interface ToolbarProps {
 export function Toolbar({
   view,
   periodLabel,
+  translations,
   onViewChange,
   onPrevious,
   onToday,
   onNext,
 }: ToolbarProps) {
   return (
-<div className={styles.toolbar}>
-  <div className={styles.controls}>
-    <select
-      value={view}
-      onChange={(event) =>
-        onViewChange(event.target.value as CalendarView)
-      }
-    >
-      <option value="year">Rok</option>
-      <option value="month">Měsíc</option>
-      <option value="week">Týden</option>
-      <option value="day">Den</option>
-    </select>
+    <div className={styles.toolbar}>
+      <div className={styles.controls}>
+        <select
+          value={view}
+          onChange={(event) =>
+            onViewChange(event.target.value as CalendarView)
+          }
+        >
+          <option value="year">{translations.year}</option>
+          <option value="month">{translations.month}</option>
+          <option value="week">{translations.week}</option>
+          <option value="day">{translations.day}</option>
+        </select>
 
-    <button
-      type="button"
-      onClick={onToday}
-    >
-      Dnes
-    </button>
-  </div>
+        <button
+          type="button"
+          onClick={onToday}
+        >
+          {translations.today}
+        </button>
+      </div>
 
-  <div className={styles.navigation}>
-    <button
-      type="button"
-      onClick={onPrevious}
-      aria-label="Předchozí období"
-    >
-      ‹
-    </button>
+      <div className={styles.navigation}>
+        <button
+          type="button"
+          onClick={onPrevious}
+          aria-label={translations.previousPeriod}
+        >
+          ‹
+        </button>
 
-    <span className={styles.period}>
-      {periodLabel}
-    </span>
+        <span className={styles.period}>
+          {periodLabel}
+        </span>
 
-    <button
-      type="button"
-      onClick={onNext}
-      aria-label="Následující období"
-    >
-      ›
-    </button>
-  </div>
+        <button
+          type="button"
+          onClick={onNext}
+          aria-label={translations.nextPeriod}
+        >
+          ›
+        </button>
+      </div>
 
-  <div />
-</div>
+      <div />
+    </div>
   )
 }

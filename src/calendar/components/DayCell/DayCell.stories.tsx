@@ -43,14 +43,3 @@ export const OutsideMonth: Story = {
     isToday: false,
   },
 }
-
-export const Compact: Story = {
-  args: {
-    day: {
-      date: '2026-08-31',
-      day: 31,
-      isCurrentMonth: false,
-    },
-    isToday: false,
-  },
-}

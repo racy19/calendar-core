@@ -28,3 +28,15 @@ export type MonthViewVariant = 'default' | 'compact'
 export type CalendarTheme = 'light' | 'dark'
 
 export type CalendarAccent = 'gray' |'blue' | 'green'
+
+export interface CalendarTranslations {
+  year: string
+  month: string
+  week: string
+  day: string
+
+  today: string
+
+  previousPeriod: string
+  nextPeriod: string
+}

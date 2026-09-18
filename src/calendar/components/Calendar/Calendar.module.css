@@ -21,8 +21,6 @@
   --calendar-today: var(--calendar-primary);
   --calendar-today-background: #f1f5f9;
 
-  --calendar-event-text: var(--calendar-primary);
-
   /* Palette colors */
   --calendar-palette-1: #2563eb;
   --calendar-palette-1-text: #ffffff;
@@ -56,7 +54,6 @@
 
   /* Layout */
   --calendar-radius: 0.75rem;
-  --calendar-cell-radius: 0;
   --calendar-spacing: 0.5rem;
 
   --calendar-day-min-height: 100px;
@@ -85,6 +82,11 @@
   font-size: var(--calendar-font-size);
 }
 
+/* no border radius for day view */
+.calendar[data-view='day'] {
+  border-radius: 0;
+}
+
 /* Dark + gray */
 .calendar[data-theme='dark'] {
   --calendar-background: #0f172a;
@@ -106,8 +108,6 @@
 
   --calendar-today: var(--calendar-primary);
   --calendar-today-background: #1e293b;
-
-  --calendar-event-text: var(--calendar-primary);
 
   /* Palette colors */
   --calendar-palette-1: #60a5fa;
@@ -151,8 +151,6 @@
 
   --calendar-today: var(--calendar-primary);
   --calendar-today-background: #eff6ff;
-
-  --calendar-event-text: var(--calendar-primary);
 
   /* Palette colors */
   /* Palette 1 — cyan */
@@ -203,8 +201,6 @@
   --calendar-today: var(--calendar-primary);
   --calendar-today-background: #f0fdf4;
 
-  --calendar-event-text: var(--calendar-primary);
-
   /* Palette 1 — teal */
   --calendar-palette-1: #0d9488;
   --calendar-palette-1-text: #ffffff;
@@ -253,8 +249,6 @@
   --calendar-today: var(--calendar-primary);
   --calendar-today-background: #172554;
 
-  --calendar-event-text: var(--calendar-primary);
-
   /* Palette 1 — cyan */
   --calendar-palette-1: #22d3ee;
   --calendar-palette-1-text: #083344;
@@ -302,8 +296,6 @@
 
   --calendar-today: var(--calendar-primary);
   --calendar-today-background: #14532d;
-
-  --calendar-event-text: var(--calendar-primary);
 
   /* Palette 1 — teal */
   --calendar-palette-1: #2dd4bf;

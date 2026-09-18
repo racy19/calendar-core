@@ -26,8 +26,8 @@ export function MonthView({
   firstDayOfWeek = 1,
   locale,
   variant = 'default',
+  onDayClick,
   renderDayContent,
-  onDayClick
 }: MonthViewProps) {
   const days = getMonthDays(date, firstDayOfWeek)
 
@@ -45,8 +45,10 @@ export function MonthView({
         {days.map((day) => (
           <DayCell
             key={day.date}
-            day={day}
+            date={day.date}
+            day={day.day}
             isToday={isToday(day.date)}
+            isCurrentMonth={day.isCurrentMonth}
             onClick={() => onDayClick?.(day.date)}
           >
             {renderDayContent?.(day.date)}

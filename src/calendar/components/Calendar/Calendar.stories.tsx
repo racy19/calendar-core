@@ -6,8 +6,6 @@ import type {
   CalendarDate,
   CalendarView,
 } from '../../types/calendar'
-import { MockEventChip } from '../../__fixtures__/MockEventChip'
-import { mockEvents } from '../../__fixtures__/mockEvents'
 
 const meta = {
   title: 'Calendar/Calendar',
@@ -16,7 +14,7 @@ const meta = {
   argTypes: {
     view: {
       control: 'select',
-      options: ['month', 'week', 'day'],
+      options: ['year','month', 'week', 'day'],
     },
     theme: {
       control: 'select',
@@ -52,9 +50,6 @@ export const Default: Story = {
 
     onViewChange: () => { },
     onDateChange: () => { },
-    onDayClick: (date) => {
-      console.log('Clicked day:', date)
-    },
   },
 
   render: (args) => {
@@ -68,63 +63,6 @@ export const Default: Story = {
         date={date}
         onViewChange={setView}
         onDateChange={setDate}
-      />
-    )
-  },
-}
-
-export const WithMockEvents: Story = {
-  args: {
-    view: 'month',
-    date: '2026-09-01',
-    theme: 'dark',
-    accent: 'blue',
-    firstDayOfWeek: 1,
-    locale: 'cs-CZ',
-
-    onViewChange: () => {},
-    onDateChange: () => {},
-  },
-
-  render: (args) => {
-    const [view, setView] = useState<CalendarView>(args.view)
-    const [date, setDate] = useState<CalendarDate>(args.date)
-
-    const renderDayContent = (dayDate: CalendarDate) => {
-      const dayEvents = mockEvents.filter(
-        (event) => event.date === dayDate,
-      )
-
-      if (dayEvents.length === 0) {
-        return null
-      }
-
-      return (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '3px',
-          }}
-        >
-          {dayEvents.map((event) => (
-            <MockEventChip
-              key={event.id}
-              event={event}
-            />
-          ))}
-        </div>
-      )
-    }
-
-    return (
-      <Calendar
-        {...args}
-        view={view}
-        date={date}
-        onViewChange={setView}
-        onDateChange={setDate}
-        renderDayContent={renderDayContent}
       />
     )
   },

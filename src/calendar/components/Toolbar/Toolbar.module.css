@@ -28,7 +28,9 @@
   justify-self: start;
 }
 
-.toolbar button {
+.toolbar button,
+.toolbar select {
+  min-height: 2.25rem;
   padding: 0.5rem 0.75rem;
 
   border: 1px solid var(--calendar-border);
@@ -39,16 +41,34 @@
 
   font: inherit;
 
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.toolbar button {
   cursor: pointer;
 }
 
-.toolbar button:hover {
+.toolbar select {
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+.toolbar button:hover,
+.toolbar select:hover {
   background: var(--calendar-surface-hover);
   border-color: var(--calendar-border-strong);
 }
 
-.views button[data-active='true'] {
-  background: var(--calendar-primary);
+.toolbar button:focus-visible,
+.toolbar select:focus-visible {
+  outline: none;
+
   border-color: var(--calendar-primary);
-  color: var(--calendar-primary-text);
+
+  box-shadow:
+    0 0 0 2px var(--calendar-background),
+    0 0 0 4px var(--calendar-primary);
 }

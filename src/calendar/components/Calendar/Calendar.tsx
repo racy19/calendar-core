@@ -9,6 +9,9 @@ import { Toolbar } from '../Toolbar'
 import { WeekView } from '../WeekView'
 import { YearView } from '../YearView/YearView'
 import styles from './Calendar.module.css'
+import { csTranslations } from '../../locale/cs'
+import { enTranslations } from '../../locale/en'
+import { deTranslations } from '../../locale/de'
 
 interface CalendarProps {
   view: CalendarView
@@ -44,16 +47,28 @@ export function Calendar({
     locale,
     firstDayOfWeek,
   )
+
+const translationsMap = {
+  'cs-CZ': csTranslations,
+  'en-US': enTranslations,
+  'de-DE': deTranslations,
+}
+
+const translations =
+  translationsMap[locale as keyof typeof translationsMap] ?? csTranslations
+
   return (
     <div
       className={styles.calendar}
       data-theme={theme}
       data-accent={accent}
+      data-view={view}
     >
       <Toolbar
         view={view}
         onViewChange={onViewChange}
         periodLabel={periodLabel}
+        translations={translations}
         onPrevious={() => onDateChange(getPreviousDate(date, view))}
         onToday={() => onDateChange(getToday())}
         onNext={() => onDateChange(getNextDate(date, view))}

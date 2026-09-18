@@ -1,7 +1,8 @@
 .day {
+  width: 100%;
   min-height: var(--calendar-day-min-height);
 
-  padding: var(--calendar-spacing);
+  padding: var(--calendar-day-padding);
 
   background: var(--calendar-surface);
   color: var(--calendar-text);
@@ -41,4 +42,9 @@
   height: var(--calendar-day-number-size);
 
   font-size: var(--calendar-day-font-size);
+}
+
+.dayView > button {
+  width: 100%;
+  padding: 1rem;
 }
