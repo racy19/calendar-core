@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { MonthDay } from '../../types/calendar'
 
 import styles from './DayCell.module.css'
@@ -5,12 +6,14 @@ import styles from './DayCell.module.css'
 interface DayCellProps {
   day: MonthDay
   isToday?: boolean
+  children?: ReactNode
   onClick?: () => void
 }
 
 export function DayCell({
   day,
   isToday = false,
+  children,
   onClick,
 }: DayCellProps) {
   return (
@@ -24,6 +27,11 @@ export function DayCell({
       <span className={styles.dayNumber}>
         {day.day}
       </span>
+      {children && (
+        <div className={styles.content}>
+          {children}
+        </div>
+      )}
     </button>
   )
 }

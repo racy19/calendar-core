@@ -8,18 +8,51 @@
 
   --calendar-text: #0f172a;
   --calendar-text-muted: #64748b;
+  --calendar-primary-soft: #f1f5f9;
+  --calendar-primary-soft-text: #475569;
 
   --calendar-border: #e2e8f0;
   --calendar-border-strong: #cbd5e1;
 
-  /* Default gray accent */
+  /* Primary - default gray accent */
   --calendar-primary: #475569;
   --calendar-primary-text: #ffffff;
 
-  --calendar-today: #475569;
+  --calendar-today: var(--calendar-primary);
   --calendar-today-background: #f1f5f9;
 
-  --calendar-event-text: #475569;
+  --calendar-event-text: var(--calendar-primary);
+
+  /* Palette colors */
+  --calendar-palette-1: #2563eb;
+  --calendar-palette-1-text: #ffffff;
+  --calendar-palette-1-soft: #dbeafe;
+  --calendar-palette-1-soft-text: #1d4ed8;
+
+  --calendar-palette-2: #16a34a;
+  --calendar-palette-2-text: #ffffff;
+  --calendar-palette-2-soft: #dcfce7;
+  --calendar-palette-2-soft-text: #15803d;
+
+  --calendar-palette-3: #7c3aed;
+  --calendar-palette-3-text: #ffffff;
+  --calendar-palette-3-soft: #ede9fe;
+  --calendar-palette-3-soft-text: #6d28d9;
+
+  --calendar-palette-4: #b45309;
+  --calendar-palette-4-text: #ffffff;
+  --calendar-palette-4-soft: #fef3c7;
+  --calendar-palette-4-soft-text: #92400e;
+
+  --calendar-palette-5: #e11d48;
+  --calendar-palette-5-text: #ffffff;
+  --calendar-palette-5-soft: #ffe4e6;
+  --calendar-palette-5-soft-text: #be123c;
+
+  --calendar-palette-6: #0e7490;
+  --calendar-palette-6-text: #ffffff;
+  --calendar-palette-6-soft: #cffafe;
+  --calendar-palette-6-soft-text: #0e7490;
 
   /* Layout */
   --calendar-radius: 0.75rem;
@@ -61,57 +94,250 @@
 
   --calendar-text: #f8fafc;
   --calendar-text-muted: #94a3b8;
+  --calendar-primary-soft: #1e293b;
+  --calendar-primary-soft-text: #cbd5e1;
 
   --calendar-border: #334155;
   --calendar-border-strong: #475569;
 
+  /* Primary - default gray accent */
   --calendar-primary: #94a3b8;
   --calendar-primary-text: #0f172a;
 
-  --calendar-today: #94a3b8;
+  --calendar-today: var(--calendar-primary);
   --calendar-today-background: #1e293b;
 
-  --calendar-event-text: #cbd5e1;
+  --calendar-event-text: var(--calendar-primary);
+
+  /* Palette colors */
+  --calendar-palette-1: #60a5fa;
+  --calendar-palette-1-text: #0f172a;
+  --calendar-palette-1-soft: #172554;
+  --calendar-palette-1-soft-text: #93c5fd;
+
+  --calendar-palette-2: #4ade80;
+  --calendar-palette-2-text: #052e16;
+  --calendar-palette-2-soft: #14532d;
+  --calendar-palette-2-soft-text: #86efac;
+
+  --calendar-palette-3: #a78bfa;
+  --calendar-palette-3-text: #2e1065;
+  --calendar-palette-3-soft: #4c1d95;
+  --calendar-palette-3-soft-text: #c4b5fd;
+
+  --calendar-palette-4: #fbbf24;
+  --calendar-palette-4-text: #451a03;
+  --calendar-palette-4-soft: #78350f;
+  --calendar-palette-4-soft-text: #fde68a;
+
+  --calendar-palette-5: #fb7185;
+  --calendar-palette-5-text: #4c0519;
+  --calendar-palette-5-soft: #881337;
+  --calendar-palette-5-soft-text: #fda4af;
+
+  --calendar-palette-6: #22d3ee;
+  --calendar-palette-6-text: #083344;
+  --calendar-palette-6-soft: #164e63;
+  --calendar-palette-6-soft-text: #67e8f9;
 }
 
 /* Light + blue */
 .calendar[data-accent='blue'] {
+  /* Primary — blue */
   --calendar-primary: #2563eb;
   --calendar-primary-text: #ffffff;
+  --calendar-primary-soft: #dbeafe;
+  --calendar-primary-soft-text: #1d4ed8;
 
-  --calendar-today: #2563eb;
+  --calendar-today: var(--calendar-primary);
   --calendar-today-background: #eff6ff;
 
-  --calendar-event-text: #2563eb;}
+  --calendar-event-text: var(--calendar-primary);
+
+  /* Palette colors */
+  /* Palette 1 — cyan */
+  --calendar-palette-1: #0891b2;
+  --calendar-palette-1-text: #ffffff;
+  --calendar-palette-1-soft: #cffafe;
+  --calendar-palette-1-soft-text: #0e7490;
+
+  /* Palette 2 — green */
+  --calendar-palette-2: #16a34a;
+  --calendar-palette-2-text: #ffffff;
+  --calendar-palette-2-soft: #dcfce7;
+  --calendar-palette-2-soft-text: #15803d;
+
+  /* Palette 3 — violet */
+  --calendar-palette-3: #7c3aed;
+  --calendar-palette-3-text: #ffffff;
+  --calendar-palette-3-soft: #ede9fe;
+  --calendar-palette-3-soft-text: #6d28d9;
+
+  /* Palette 4 — amber */
+  --calendar-palette-4: #d97706;
+  --calendar-palette-4-text: #ffffff;
+  --calendar-palette-4-soft: #fef3c7;
+  --calendar-palette-4-soft-text: #92400e;
+
+  /* Palette 5 — rose */
+  --calendar-palette-5: #e11d48;
+  --calendar-palette-5-text: #ffffff;
+  --calendar-palette-5-soft: #ffe4e6;
+  --calendar-palette-5-soft-text: #be123c;
+
+  /* Palette 6 — lime */
+  --calendar-palette-6: #65a30d;
+  --calendar-palette-6-text: #ffffff;
+  --calendar-palette-6-soft: #ecfccb;
+  --calendar-palette-6-soft-text: #4d7c0f;
+}
 
 /* Light + green */
 .calendar[data-accent='green'] {
+  /* Primary — green */
   --calendar-primary: #16a34a;
   --calendar-primary-text: #ffffff;
+  --calendar-primary-soft: #dcfce7;
+  --calendar-primary-soft-text: #15803d;
 
-  --calendar-today: #16a34a;
+  --calendar-today: var(--calendar-primary);
   --calendar-today-background: #f0fdf4;
 
-  --calendar-event-text: #15803d;}
+  --calendar-event-text: var(--calendar-primary);
+
+  /* Palette 1 — teal */
+  --calendar-palette-1: #0d9488;
+  --calendar-palette-1-text: #ffffff;
+  --calendar-palette-1-soft: #ccfbf1;
+  --calendar-palette-1-soft-text: #0f766e;
+
+  /* Palette 2 — lime */
+  --calendar-palette-2: #65a30d;
+  --calendar-palette-2-text: #ffffff;
+  --calendar-palette-2-soft: #ecfccb;
+  --calendar-palette-2-soft-text: #4d7c0f;
+
+  /* Palette 3 — amber */
+  --calendar-palette-3: #ca8a04;
+  --calendar-palette-3-text: #ffffff;
+  --calendar-palette-3-soft: #fef9c3;
+  --calendar-palette-3-soft-text: #a16207;
+
+  /* Palette 4 — blue */
+  --calendar-palette-4: #2563eb;
+  --calendar-palette-4-text: #ffffff;
+  --calendar-palette-4-soft: #dbeafe;
+  --calendar-palette-4-soft-text: #1d4ed8;
+
+  /* Palette 5 — purple */
+  --calendar-palette-5: #9333ea;
+  --calendar-palette-5-text: #ffffff;
+  --calendar-palette-5-soft: #f3e8ff;
+  --calendar-palette-5-soft-text: #7e22ce;
+
+  /* Palette 6 — rose */
+  --calendar-palette-6: #e11d48;
+  --calendar-palette-6-text: #ffffff;
+  --calendar-palette-6-soft: #ffe4e6;
+  --calendar-palette-6-soft-text: #be123c;
+}
 
 /* Dark + blue */
 .calendar[data-theme='dark'][data-accent='blue'] {
-    --calendar-primary: #60a5fa;
+  /* Primary — blue */
+  --calendar-primary: #60a5fa;
   --calendar-primary-text: #0f172a;
+  --calendar-primary-soft: #172554;
+  --calendar-primary-soft-text: #93c5fd;
 
-  --calendar-today: #60a5fa;
+  --calendar-today: var(--calendar-primary);
   --calendar-today-background: #172554;
 
-  --calendar-event-text: #60a5fa;
+  --calendar-event-text: var(--calendar-primary);
+
+  /* Palette 1 — cyan */
+  --calendar-palette-1: #22d3ee;
+  --calendar-palette-1-text: #083344;
+  --calendar-palette-1-soft: #164e63;
+  --calendar-palette-1-soft-text: #67e8f9;
+
+  /* Palette 2 — green */
+  --calendar-palette-2: #4ade80;
+  --calendar-palette-2-text: #052e16;
+  --calendar-palette-2-soft: #14532d;
+  --calendar-palette-2-soft-text: #86efac;
+
+  /* Palette 3 — violet */
+  --calendar-palette-3: #a78bfa;
+  --calendar-palette-3-text: #2e1065;
+  --calendar-palette-3-soft: #4c1d95;
+  --calendar-palette-3-soft-text: #c4b5fd;
+
+  /* Palette 4 — amber */
+  --calendar-palette-4: #fbbf24;
+  --calendar-palette-4-text: #451a03;
+  --calendar-palette-4-soft: #78350f;
+  --calendar-palette-4-soft-text: #fde68a;
+
+  /* Palette 5 — rose */
+  --calendar-palette-5: #fb7185;
+  --calendar-palette-5-text: #4c0519;
+  --calendar-palette-5-soft: #881337;
+  --calendar-palette-5-soft-text: #fda4af;
+
+  /* Palette 6 — lime */
+  --calendar-palette-6: #a3e635;
+  --calendar-palette-6-text: #1a2e05;
+  --calendar-palette-6-soft: #365314;
+  --calendar-palette-6-soft-text: #bef264;
 }
 
 /* Dark + green */
 .calendar[data-theme='dark'][data-accent='green'] {
+  /* Primary — green */
   --calendar-primary: #4ade80;
   --calendar-primary-text: #052e16;
+  --calendar-primary-soft: #14532d;
+  --calendar-primary-soft-text: #86efac;
 
-  --calendar-today: #4ade80;
+  --calendar-today: var(--calendar-primary);
   --calendar-today-background: #14532d;
 
-  --calendar-event-text: #4ade80;
+  --calendar-event-text: var(--calendar-primary);
+
+  /* Palette 1 — teal */
+  --calendar-palette-1: #2dd4bf;
+  --calendar-palette-1-text: #042f2e;
+  --calendar-palette-1-soft: #134e4a;
+  --calendar-palette-1-soft-text: #5eead4;
+
+  /* Palette 2 — lime */
+  --calendar-palette-2: #a3e635;
+  --calendar-palette-2-text: #1a2e05;
+  --calendar-palette-2-soft: #365314;
+  --calendar-palette-2-soft-text: #bef264;
+
+  /* Palette 3 — yellow */
+  --calendar-palette-3: #facc15;
+  --calendar-palette-3-text: #422006;
+  --calendar-palette-3-soft: #713f12;
+  --calendar-palette-3-soft-text: #fde047;
+
+  /* Palette 4 — blue */
+  --calendar-palette-4: #60a5fa;
+  --calendar-palette-4-text: #0f172a;
+  --calendar-palette-4-soft: #172554;
+  --calendar-palette-4-soft-text: #93c5fd;
+
+  /* Palette 5 — purple */
+  --calendar-palette-5: #c084fc;
+  --calendar-palette-5-text: #3b0764;
+  --calendar-palette-5-soft: #581c87;
+  --calendar-palette-5-soft-text: #d8b4fe;
+
+  /* Palette 6 — rose */
+  --calendar-palette-6: #fb7185;
+  --calendar-palette-6-text: #4c0519;
+  --calendar-palette-6-soft: #881337;
+  --calendar-palette-6-soft-text: #fda4af;
 }

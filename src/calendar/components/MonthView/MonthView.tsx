@@ -10,6 +10,7 @@ import { DayCell } from '../DayCell'
 import styles from './MonthView.module.css'
 import { isToday } from '../../core/date'
 import { WeekdayHeader } from '../WeekdayHeader'
+import type { ReactNode } from 'react'
 
 interface MonthViewProps {
   date: CalendarDate
@@ -17,6 +18,7 @@ interface MonthViewProps {
   locale?: string
   variant?: MonthViewVariant
   onDayClick?: (date: CalendarDate) => void
+  renderDayContent?: (date: CalendarDate) => ReactNode
 }
 
 export function MonthView({
@@ -24,6 +26,7 @@ export function MonthView({
   firstDayOfWeek = 1,
   locale,
   variant = 'default',
+  renderDayContent,
   onDayClick
 }: MonthViewProps) {
   const days = getMonthDays(date, firstDayOfWeek)
@@ -45,7 +48,9 @@ export function MonthView({
             day={day}
             isToday={isToday(day.date)}
             onClick={() => onDayClick?.(day.date)}
-          />
+          >
+            {renderDayContent?.(day.date)}
+          </DayCell>
         ))}
       </div>
     </div>

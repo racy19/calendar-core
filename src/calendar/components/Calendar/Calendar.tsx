@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { getToday } from '../../core/date'
 import { formatPeriodLabel } from '../../core/format'
 import { getNextDate, getPreviousDate } from '../../core/navigation'
@@ -19,6 +20,7 @@ interface CalendarProps {
   firstDayOfWeek?: FirstDayOfWeek
   locale?: string
 
+  renderDayContent?: (date: CalendarDate) => ReactNode
   onViewChange: (view: CalendarView) => void
   onDateChange: (date: CalendarDate) => void
   onDayClick?: (date: CalendarDate) => void
@@ -31,6 +33,7 @@ export function Calendar({
   accent = 'gray',
   firstDayOfWeek = 1,
   locale,
+  renderDayContent,
   onViewChange,
   onDateChange,
   onDayClick
@@ -70,6 +73,7 @@ export function Calendar({
             date={date}
             firstDayOfWeek={firstDayOfWeek}
             locale={locale}
+            renderDayContent={renderDayContent}
             onDayClick={onDayClick}
           />
         )}
