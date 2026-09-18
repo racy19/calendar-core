@@ -9,10 +9,6 @@
   border-bottom: 1px solid var(--calendar-border);
 }
 
-.right {
-  justify-self: end;
-}
-
 .navigation {
   display: flex;
   align-items: center;
@@ -21,15 +17,15 @@
 
 .period {
   min-width: 10rem;
-
   font-weight: 600;
   text-align: center;
 }
 
-.views {
+.controls {
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
   justify-self: start;
-  gap: 0.25rem;
 }
 
 .toolbar button {

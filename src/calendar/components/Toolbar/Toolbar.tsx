@@ -21,65 +21,51 @@ export function Toolbar({
   onNext,
 }: ToolbarProps) {
   return (
-    <div className={styles.toolbar}>
-      <div className={styles.views}>
-        <button
-          type="button"
-          data-active={view === 'year'}
-          onClick={() => onViewChange('year')}
-        >
-          Year
-        </button>
-        <button
-          type="button"
-          data-active={view === 'month'}
-          onClick={() => onViewChange('month')}
-        >
-          Month
-        </button>
+<div className={styles.toolbar}>
+  <div className={styles.controls}>
+    <select
+      value={view}
+      onChange={(event) =>
+        onViewChange(event.target.value as CalendarView)
+      }
+    >
+      <option value="year">Rok</option>
+      <option value="month">Měsíc</option>
+      <option value="week">Týden</option>
+      <option value="day">Den</option>
+    </select>
 
-        <button
-          type="button"
-          data-active={view === 'week'}
-          onClick={() => onViewChange('week')}
-        >
-          Week
-        </button>
+    <button
+      type="button"
+      onClick={onToday}
+    >
+      Dnes
+    </button>
+  </div>
 
-        <button
-          type="button"
-          data-active={view === 'day'}
-          onClick={() => onViewChange('day')}
-        >
-          Day
-        </button>
-      </div>
-      <div className={styles.navigation}>
-        <button
-          type="button"
-          onClick={onPrevious}
-          aria-label="Previous period"
-        >
-          &lt;
-        </button>
+  <div className={styles.navigation}>
+    <button
+      type="button"
+      onClick={onPrevious}
+      aria-label="Předchozí období"
+    >
+      ‹
+    </button>
 
-        <div className={styles.period}>
-          {periodLabel}
-        </div>
+    <span className={styles.period}>
+      {periodLabel}
+    </span>
 
-        <button
-          type="button"
-          onClick={onNext}
-          aria-label="Next period"
-        >
-          &gt;
-        </button>
-      </div>
-      <div className={styles.right}>
-        <button type="button" onClick={onToday}>
-          Today
-        </button>
-      </div>
-    </div>
+    <button
+      type="button"
+      onClick={onNext}
+      aria-label="Následující období"
+    >
+      ›
+    </button>
+  </div>
+
+  <div />
+</div>
   )
 }
