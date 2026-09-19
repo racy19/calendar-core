@@ -333,3 +333,8 @@
   --calendar-palette-6-soft: #881337;
   --calendar-palette-6-soft-text: #fda4af;
 }
+
+.view {
+  width: 100%;
+  touch-action: pan-y;
+}

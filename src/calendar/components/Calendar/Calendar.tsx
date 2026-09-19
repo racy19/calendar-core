@@ -12,6 +12,7 @@ import styles from './Calendar.module.css'
 import { csTranslations } from '../../locale/cs'
 import { enTranslations } from '../../locale/en'
 import { deTranslations } from '../../locale/de'
+import { useSwipeNavigation } from '../../hooks/useSwipeNavigation'
 
 interface CalendarProps {
   view: CalendarView
@@ -48,14 +49,22 @@ export function Calendar({
     firstDayOfWeek,
   )
 
-const translationsMap = {
-  'cs-CZ': csTranslations,
-  'en-US': enTranslations,
-  'de-DE': deTranslations,
-}
+  const translationsMap = {
+    'cs-CZ': csTranslations,
+    'en-US': enTranslations,
+    'de-DE': deTranslations,
+  }
 
-const translations =
-  translationsMap[locale as keyof typeof translationsMap] ?? csTranslations
+  const translations =
+    translationsMap[locale as keyof typeof translationsMap] ?? csTranslations
+
+  const swipeHandlers = useSwipeNavigation({
+    onSwipeLeft: () =>
+      onDateChange(getNextDate(date, view)),
+
+    onSwipeRight: () =>
+      onDateChange(getPreviousDate(date, view)),
+  })
 
   return (
     <div
@@ -74,7 +83,10 @@ const translations =
         onNext={() => onDateChange(getNextDate(date, view))}
       />
 
-      <div>
+      <div
+        className={styles.view}
+        {...swipeHandlers}
+      >
         {view === 'year' && (
           <YearView
             date={date}
