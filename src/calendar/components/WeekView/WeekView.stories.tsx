@@ -18,3 +18,11 @@ export const Default: Story = {
     onDayClick: () => {},
   },
 }
+
+export const WithContent: Story = {
+  args: {
+    date: '2026-09-12',
+    firstDayOfWeek: 1,
+    onDayClick: () => {},
+  },
+}

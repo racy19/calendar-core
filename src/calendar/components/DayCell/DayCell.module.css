@@ -43,8 +43,3 @@
 
   font-size: var(--calendar-day-font-size);
 }
-
-.dayView > button {
-  width: 100%;
-  padding: 1rem;
-}

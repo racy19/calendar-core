@@ -45,8 +45,7 @@ export function MonthView({
         {days.map((day) => (
           <DayCell
             key={day.date}
-            date={day.date}
-            day={day.day}
+            day={day}
             isToday={isToday(day.date)}
             isCurrentMonth={day.isCurrentMonth}
             onClick={() => onDayClick?.(day.date)}

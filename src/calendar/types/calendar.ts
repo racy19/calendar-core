@@ -12,16 +12,16 @@ export type CalendarDateUnit = 'day' | 'week' | 'month' | 'year'
 
 export type FirstDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
-export interface MonthDay {
+export interface CalendarDay {
   date: CalendarDate
   day: number
+}
+
+export interface MonthDay extends CalendarDay {
   isCurrentMonth: boolean
 }
 
-export interface WeekDay {
-  date: CalendarDate
-  day: number
-}
+export type WeekDay = CalendarDay
 
 export type MonthViewVariant = 'default' | 'compact'
 

@@ -15,12 +15,20 @@ export function DayView({
   onDayClick,
   renderDayContent
 }: DayViewProps) {
-  const day = parseCalendarDate(date).getDate();
+  const parsedDate = parseCalendarDate(date)
+
+  if (!parsedDate) {
+    return null
+  }
+
+  const day = {
+    date,
+    day: parsedDate.getDate(),
+  }
 
   return (
     <div className={styles.dayView}>
       <DayCell
-        date={date}
         day={day}
         isToday={isToday(date)}
         onClick={() => onDayClick?.(date)}

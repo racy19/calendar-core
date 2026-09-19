@@ -21,22 +21,19 @@ export function WeekView({
   date,
   firstDayOfWeek = 1,
   onDayClick,
-  renderDayContent
 }: WeekViewProps) {
   const days = getWeekDays(date, firstDayOfWeek)
 
   return (
     <div className={styles.week}>
       {days.map((day) => (
-          <DayCell
-            key={day.date}
-            date={day.date}
-            day={day.day}
-            isToday={isToday(day.date)}
-            onClick={() => onDayClick?.(day.date)}
-          >
-            {renderDayContent?.(day.date)}
-          </DayCell>
+        <DayCell
+          key={day.date}
+          day={day}
+          isToday={isToday(day.date)}
+          onClick={() => onDayClick?.(day.date)}
+        >
+        </DayCell>
       ))}
     </div>
   )

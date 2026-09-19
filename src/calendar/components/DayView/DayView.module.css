@@ -1,3 +1,8 @@
 .dayView {
   width: 100%;
 }
+
+.dayView > button {
+  width: 100%;
+  padding: 1rem;
+}

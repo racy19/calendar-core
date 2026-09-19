@@ -16,8 +16,8 @@ export const Default: Story = {
     day: {
       date: '2026-09-12',
       day: 12,
-      isCurrentMonth: true,
     },
+    isCurrentMonth: true,
     isToday: false,
   },
 }
@@ -27,8 +27,8 @@ export const Today: Story = {
     day: {
       date: '2026-09-12',
       day: 12,
-      isCurrentMonth: true,
     },
+    isCurrentMonth: true,
     isToday: true,
   },
 }
@@ -38,8 +38,19 @@ export const OutsideMonth: Story = {
     day: {
       date: '2026-08-31',
       day: 31,
-      isCurrentMonth: false,
     },
     isToday: false,
+    isCurrentMonth: false,
+  },
+}
+
+export const WithContent: Story = {
+  args: {
+    day: {
+      date: '2026-09-12',
+      day: 12,
+    },
+    isToday: false,
+    isCurrentMonth: true,
   },
 }
