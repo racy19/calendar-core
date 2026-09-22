@@ -19,7 +19,8 @@
   --calendar-primary-text: #ffffff;
 
   --calendar-today: var(--calendar-primary);
-  --calendar-today-background: #f1f5f9;
+  --calendar-today-background: var(--calendar-primary);
+  --calendar-today-text: var(--calendar-primary-text);
 
   /* Palette colors */
   --calendar-palette-1: #2563eb;
@@ -56,7 +57,10 @@
   --calendar-radius: 0.75rem;
   --calendar-spacing: 0.5rem;
 
-  --calendar-day-min-height: 100px;
+  --calendar-day-min-height: 6.25rem;
+  --calendar-day-padding: 0.25rem;
+  --calendar-day-number-size: 1.75rem;
+  --calendar-day-font-size: 0.875rem;
 
   /* Typography */
   --calendar-font-family: system-ui, sans-serif;
@@ -66,6 +70,8 @@
   --calendar-shadow:
     0 1px 2px rgb(0 0 0 / 0.04),
     0 1px 3px rgb(0 0 0 / 0.08);
+
+  box-sizing: border-box;
 
   width: 100%;
   overflow: hidden;
@@ -80,11 +86,6 @@
 
   font-family: var(--calendar-font-family);
   font-size: var(--calendar-font-size);
-}
-
-/* no border radius for day view */
-.calendar[data-view='day'] {
-  border-radius: 0;
 }
 
 /* Dark + gray */
@@ -102,12 +103,11 @@
   --calendar-border: #334155;
   --calendar-border-strong: #475569;
 
+  --calendar-shadow: none;
+
   /* Primary - default gray accent */
   --calendar-primary: #94a3b8;
   --calendar-primary-text: #0f172a;
-
-  --calendar-today: var(--calendar-primary);
-  --calendar-today-background: #1e293b;
 
   /* Palette colors */
   --calendar-palette-1: #60a5fa;
@@ -143,14 +143,12 @@
 
 /* Light + blue */
 .calendar[data-accent='blue'] {
+  --calendar-surface-hover: #eff6ff;
   /* Primary — blue */
   --calendar-primary: #2563eb;
   --calendar-primary-text: #ffffff;
   --calendar-primary-soft: #dbeafe;
   --calendar-primary-soft-text: #1d4ed8;
-
-  --calendar-today: var(--calendar-primary);
-  --calendar-today-background: #eff6ff;
 
   /* Palette colors */
   /* Palette 1 — cyan */
@@ -192,14 +190,12 @@
 
 /* Light + green */
 .calendar[data-accent='green'] {
+  --calendar-surface-hover: #dcfce7;
   /* Primary — green */
   --calendar-primary: #16a34a;
   --calendar-primary-text: #ffffff;
   --calendar-primary-soft: #dcfce7;
   --calendar-primary-soft-text: #15803d;
-
-  --calendar-today: var(--calendar-primary);
-  --calendar-today-background: #f0fdf4;
 
   /* Palette 1 — teal */
   --calendar-palette-1: #0d9488;
@@ -240,14 +236,12 @@
 
 /* Dark + blue */
 .calendar[data-theme='dark'][data-accent='blue'] {
+  --calendar-surface-hover: #172554;
   /* Primary — blue */
   --calendar-primary: #60a5fa;
   --calendar-primary-text: #0f172a;
   --calendar-primary-soft: #172554;
   --calendar-primary-soft-text: #93c5fd;
-
-  --calendar-today: var(--calendar-primary);
-  --calendar-today-background: #172554;
 
   /* Palette 1 — cyan */
   --calendar-palette-1: #22d3ee;
@@ -288,14 +282,12 @@
 
 /* Dark + green */
 .calendar[data-theme='dark'][data-accent='green'] {
+  --calendar-surface-hover: #14532d;
   /* Primary — green */
   --calendar-primary: #4ade80;
   --calendar-primary-text: #052e16;
   --calendar-primary-soft: #14532d;
   --calendar-primary-soft-text: #86efac;
-
-  --calendar-today: var(--calendar-primary);
-  --calendar-today-background: #14532d;
 
   /* Palette 1 — teal */
   --calendar-palette-1: #2dd4bf;

@@ -3,22 +3,3 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
   width: 100%;
 }
-
-.day {
-  min-height: 200px;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.day[data-today='true'] {
-  background: var(--calendar-today-background);
-  color: var(--calendar-text);
-  font-weight: 700;
-  outline: 2px solid var(--calendar-today);
-  outline-offset: -2px;
-}

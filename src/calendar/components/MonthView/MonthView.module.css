@@ -1,15 +1,8 @@
-.monthView {
-  --calendar-day-min-height: 108px;
-  --calendar-day-padding: 10px;
-  --calendar-day-number-size: 28px;
-  --calendar-day-font-size: 13px;
-}
-
 .monthView[data-variant='compact'] {
-  --calendar-day-min-height: 36px;
-  --calendar-day-padding: 4px;
-  --calendar-day-number-size: 24px;
-  --calendar-day-font-size: 12px;
+  --calendar-day-min-height: 2.5rem;
+  --calendar-day-padding: 0.25rem;
+  --calendar-day-number-size: 1.5rem;
+  --calendar-day-font-size: 0.75rem;
 }
 
 .month {

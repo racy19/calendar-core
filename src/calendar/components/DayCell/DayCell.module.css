@@ -1,8 +1,14 @@
 .day {
+  box-sizing: border-box;
   width: 100%;
   min-height: var(--calendar-day-min-height);
 
   padding: var(--calendar-day-padding);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   background: var(--calendar-surface);
   color: var(--calendar-text);
@@ -19,18 +25,20 @@
     border-color 120ms ease;
 }
 
-.day:hover {
-  background: var(--calendar-surface-hover);
+@media (hover: hover) and (pointer: fine) {
+  .day:hover {
+    background: var(--calendar-surface-hover);
+  }
 }
 
 .day[data-current-month='false'] {
   color: var(--calendar-text-muted);
 }
 
-.day[data-today='true'] {
+.day[data-today='true'] .dayNumber {
   background: var(--calendar-today-background);
-  outline: 2px solid var(--calendar-today);
-  outline-offset: -2px;
+  border-radius: 50%;
+  color: var(--calendar-today-text);
 }
 
 .dayNumber {
@@ -42,4 +50,7 @@
   height: var(--calendar-day-number-size);
 
   font-size: var(--calendar-day-font-size);
+
+  line-height: 1;
+  flex-shrink: 0;
 }

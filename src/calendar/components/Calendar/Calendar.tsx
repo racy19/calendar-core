@@ -107,6 +107,7 @@ export function Calendar({
         {view === 'week' && (
           <WeekView
             date={date}
+            locale={locale}
             firstDayOfWeek={firstDayOfWeek}
             onDayClick={onDayClick}
           />
