@@ -1,11 +1,11 @@
-import type { CalendarTranslations, CalendarView } from '../../types/calendar'
+import { useCalendarContext } from '../../context'
+import type { CalendarView } from '../../types/calendar'
 
 import styles from './Toolbar.module.css'
 
 interface ToolbarProps {
   view: CalendarView
   periodLabel: string
-  translations: CalendarTranslations
 
   onViewChange: (view: CalendarView) => void
   onPrevious: () => void
@@ -16,12 +16,13 @@ interface ToolbarProps {
 export function Toolbar({
   view,
   periodLabel,
-  translations,
   onViewChange,
   onPrevious,
   onToday,
   onNext,
 }: ToolbarProps) {
+  const { translations } = useCalendarContext();
+
   return (
     <div className={styles.toolbar}>
       <div className={styles.controls}>

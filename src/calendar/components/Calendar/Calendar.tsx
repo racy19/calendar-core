@@ -9,10 +9,8 @@ import { Toolbar } from '../Toolbar'
 import { WeekView } from '../WeekView'
 import { YearView } from '../YearView/YearView'
 import styles from './Calendar.module.css'
-import { csTranslations } from '../../locale/cs'
-import { enTranslations } from '../../locale/en'
-import { deTranslations } from '../../locale/de'
 import { useSwipeNavigation } from '../../hooks/useSwipeNavigation'
+import { CalendarProvider, useCalendarContext } from '../../context'
 
 interface CalendarProps {
   view: CalendarView
@@ -30,18 +28,33 @@ interface CalendarProps {
   onDayClick?: (date: CalendarDate) => void
 }
 
-export function Calendar({
+export function Calendar(props: CalendarProps) {
+  return (
+    <CalendarProvider
+      locale={props.locale}
+      firstDayOfWeek={props.firstDayOfWeek}
+    >
+      <CalendarContent {...props} />
+    </CalendarProvider>
+  )
+}
+
+function CalendarContent({
   view,
   date,
   theme = 'light',
   accent = 'gray',
-  firstDayOfWeek = 1,
-  locale,
   renderDayContent,
   onViewChange,
   onDateChange,
-  onDayClick
+  onDayClick,
 }: CalendarProps) {
+  const {
+    locale,
+    firstDayOfWeek,
+  } = useCalendarContext();
+  
+  /* locale resolution */
   const periodLabel = formatPeriodLabel(
     date,
     view,
@@ -49,23 +62,25 @@ export function Calendar({
     firstDayOfWeek,
   )
 
-  const translationsMap = {
-    'cs-CZ': csTranslations,
-    'en-US': enTranslations,
-    'de-DE': deTranslations,
+  /* nav handlers */
+  const handlePrevious = () => {
+    onDateChange(getPreviousDate(date, view))
   }
 
-  const translations =
-    translationsMap[locale as keyof typeof translationsMap] ?? csTranslations
+  const handleNext = () => {
+    onDateChange(getNextDate(date, view))
+  }
+
+  const handleToday = () => {
+    onDateChange(getToday())
+  }
 
   const swipeHandlers = useSwipeNavigation({
-    onSwipeLeft: () =>
-      onDateChange(getNextDate(date, view)),
-
-    onSwipeRight: () =>
-      onDateChange(getPreviousDate(date, view)),
+    onSwipeLeft: handleNext,
+    onSwipeRight: handlePrevious,
   })
 
+  /* render */
   return (
     <div
       className={styles.calendar}
@@ -77,10 +92,9 @@ export function Calendar({
         view={view}
         onViewChange={onViewChange}
         periodLabel={periodLabel}
-        translations={translations}
-        onPrevious={() => onDateChange(getPreviousDate(date, view))}
-        onToday={() => onDateChange(getToday())}
-        onNext={() => onDateChange(getNextDate(date, view))}
+        onPrevious={handlePrevious}
+        onToday={handleToday}
+        onNext={handleNext}
       />
 
       <div
@@ -90,16 +104,12 @@ export function Calendar({
         {view === 'year' && (
           <YearView
             date={date}
-            firstDayOfWeek={firstDayOfWeek}
-            locale={locale}
             onDayClick={onDayClick}
           />
         )}
         {view === 'month' && (
           <MonthView
             date={date}
-            firstDayOfWeek={firstDayOfWeek}
-            locale={locale}
             renderDayContent={renderDayContent}
             onDayClick={onDayClick}
           />
@@ -107,14 +117,14 @@ export function Calendar({
         {view === 'week' && (
           <WeekView
             date={date}
-            locale={locale}
-            firstDayOfWeek={firstDayOfWeek}
+            renderDayContent={renderDayContent}
             onDayClick={onDayClick}
           />
         )}
         {view === 'day' && (
           <DayView
             date={date}
+            renderDayContent={renderDayContent}
             onDayClick={onDayClick}
           />
         )}

@@ -1,11 +1,7 @@
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useArgs } from 'storybook/preview-api'
 
 import { Calendar } from './Calendar'
-import type {
-  CalendarDate,
-  CalendarView,
-} from '../../types/calendar'
 
 const meta = {
   title: 'Calendar/Calendar',
@@ -14,7 +10,7 @@ const meta = {
   argTypes: {
     view: {
       control: 'select',
-      options: ['year','month', 'week', 'day'],
+      options: ['year', 'month', 'week', 'day'],
     },
     theme: {
       control: 'select',
@@ -48,21 +44,18 @@ export const Default: Story = {
     firstDayOfWeek: 1,
     locale: 'cs-CZ',
 
-    onViewChange: () => { },
-    onDateChange: () => { },
+    onViewChange: () => {},
+    onDateChange: () => {},
   },
 
-  render: (args) => {
-    const [view, setView] = useState<CalendarView>(args.view)
-    const [date, setDate] = useState<CalendarDate>(args.date)
+  render: function Render(args) {
+    const [, updateArgs] = useArgs()
 
     return (
       <Calendar
         {...args}
-        view={view}
-        date={date}
-        onViewChange={setView}
-        onDateChange={setDate}
+        onViewChange={(view) => updateArgs({ view })}
+        onDateChange={(date) => updateArgs({ date })}
       />
     )
   },

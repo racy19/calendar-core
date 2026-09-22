@@ -1,6 +1,5 @@
 import type {
   CalendarDate,
-  FirstDayOfWeek,
   MonthViewVariant,
 } from '../../types/calendar'
 
@@ -11,11 +10,10 @@ import styles from './MonthView.module.css'
 import { isToday } from '../../core/date'
 import { WeekdayHeader } from '../WeekdayHeader'
 import type { ReactNode } from 'react'
+import { useCalendarContext } from '../../context'
 
 interface MonthViewProps {
   date: CalendarDate
-  firstDayOfWeek?: FirstDayOfWeek
-  locale?: string
   variant?: MonthViewVariant
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
@@ -23,13 +21,13 @@ interface MonthViewProps {
 
 export function MonthView({
   date,
-  firstDayOfWeek = 1,
-  locale,
   variant = 'default',
   onDayClick,
   renderDayContent,
 }: MonthViewProps) {
-  const days = getMonthDays(date, firstDayOfWeek)
+  const { locale, firstDayOfWeek } = useCalendarContext();
+
+  const days = getMonthDays(date, firstDayOfWeek);
 
   return (
     <div

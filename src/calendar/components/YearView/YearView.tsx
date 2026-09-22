@@ -1,6 +1,5 @@
 import type {
   CalendarDate,
-  FirstDayOfWeek,
 } from '../../types/calendar'
 
 import { getYearMonths } from '../../core/year'
@@ -9,20 +8,19 @@ import { parseCalendarDate } from '../../core/date'
 import { MonthView } from '../MonthView'
 
 import styles from './YearView.module.css'
+import { useCalendarContext } from '../../context'
 
 interface YearViewProps {
   date: CalendarDate
-  firstDayOfWeek?: FirstDayOfWeek
-  locale?: string
   onDayClick?: (date: CalendarDate) => void
 }
 
 export function YearView({
   date,
-  firstDayOfWeek = 1,
-  locale,
   onDayClick,
 }: YearViewProps) {
+  const { locale } = useCalendarContext();
+
   const months = getYearMonths(date)
 
   const monthFormatter = new Intl.DateTimeFormat(locale, {
@@ -49,8 +47,6 @@ export function YearView({
 
             <MonthView
               date={month}
-              firstDayOfWeek={firstDayOfWeek}
-              locale={locale}
               variant="compact"
               onDayClick={onDayClick}
             />
