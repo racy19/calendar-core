@@ -41,6 +41,13 @@
   color: var(--calendar-today-text);
 }
 
+.day[data-selected='true'] {
+  background: var(--calendar-primary-soft);
+  border-color: var(--calendar-primary);
+  box-shadow: inset 0 0 0 1px var(--calendar-primary);
+  color: var(--calendar-primary-soft-text);
+}
+
 .dayNumber {
   display: inline-flex;
   align-items: center;
@@ -50,6 +57,7 @@
   height: var(--calendar-day-number-size);
 
   font-size: var(--calendar-day-font-size);
+  font-weight: 600;
 
   line-height: 1;
   flex-shrink: 0;

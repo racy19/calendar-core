@@ -15,6 +15,7 @@ import { useCalendarContext } from '../../context'
 interface MonthViewProps {
   date: CalendarDate
   variant?: MonthViewVariant
+  selectedDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
@@ -22,6 +23,7 @@ interface MonthViewProps {
 export function MonthView({
   date,
   variant = 'default',
+  selectedDate = null,
   onDayClick,
   renderDayContent,
 }: MonthViewProps) {
@@ -46,6 +48,7 @@ export function MonthView({
             day={day}
             isToday={isToday(day.date)}
             isCurrentMonth={day.isCurrentMonth}
+            isSelected={selectedDate === day.date}
             onClick={() => onDayClick?.(day.date)}
           >
             {renderDayContent?.(day.date)}

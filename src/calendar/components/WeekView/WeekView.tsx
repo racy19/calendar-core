@@ -13,13 +13,16 @@ import { useCalendarContext } from '../../context'
 
 interface WeekViewProps {
   date: CalendarDate
+  selectedDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
 
 export function WeekView({
   date,
+  selectedDate = null,
   onDayClick,
+  renderDayContent,
 }: WeekViewProps) {
   const { locale, firstDayOfWeek } = useCalendarContext();
 
@@ -38,7 +41,9 @@ export function WeekView({
             day={day}
             isToday={isToday(day.date)}
             onClick={() => onDayClick?.(day.date)}
+            isSelected={selectedDate === day.date}
           >
+            {renderDayContent?.(day.date)}
           </DayCell>
         ))}
       </div>

@@ -8,6 +8,7 @@ interface DayCellProps {
   isToday?: boolean
   isCurrentMonth?: boolean
   children?: ReactNode
+  isSelected?: boolean
   onClick?: () => void
 }
 
@@ -16,6 +17,7 @@ export function DayCell({
   isToday = false,
   isCurrentMonth = true,
   children,
+  isSelected = false,
   onClick,
 }: DayCellProps) {
   return (
@@ -25,6 +27,8 @@ export function DayCell({
       data-date={day.date}
       data-today={isToday}
       data-current-month={isCurrentMonth}
+      data-selected={isSelected}
+      aria-pressed={isSelected}
       onClick={onClick}
     >
       <span className={styles.dayNumber}>
