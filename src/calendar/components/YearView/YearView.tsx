@@ -13,12 +13,14 @@ import { useCalendarContext } from '../../context'
 interface YearViewProps {
   date: CalendarDate
   selectedDate?: CalendarDate | null
+  focusedDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
 }
 
 export function YearView({
   date,
   selectedDate = null,
+  focusedDate = null,
   onDayClick,
 }: YearViewProps) {
   const { locale } = useCalendarContext();
@@ -51,6 +53,7 @@ export function YearView({
               date={month}
               variant="compact"
               selectedDate={selectedDate}
+              focusedDate={focusedDate}
               onDayClick={onDayClick}
             />
           </section>

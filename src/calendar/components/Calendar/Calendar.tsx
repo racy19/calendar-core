@@ -11,6 +11,8 @@ import { YearView } from '../YearView/YearView'
 import styles from './Calendar.module.css'
 import { useSwipeNavigation } from '../../hooks/useSwipeNavigation'
 import { CalendarProvider, useCalendarContext } from '../../context'
+import { useCalendarKeyboardNavigation } from '../../hooks/useCalendarKeyboardNavigation'
+import { isDateVisible } from '../../core/navigation/isDateVisible'
 
 interface CalendarProps {
   view: CalendarView
@@ -84,6 +86,19 @@ function CalendarContent({
       ? selectedDate
       : internalSelectedDate
 
+  const [focusedDate, setFocusedDate] = useState<CalendarDate>(
+    currentSelectedDate ?? date,
+  )
+
+  const activeDate = isDateVisible(
+    focusedDate,
+    date,
+    view,
+    firstDayOfWeek,
+  )
+    ? focusedDate
+    : date
+
   const changeSelection = useCallback(
     (nextDate: CalendarDate | null) => {
       if (nextDate === currentSelectedDate) {
@@ -103,7 +118,26 @@ function CalendarContent({
     ],
   )
 
+  const keyboardNavigation = useCalendarKeyboardNavigation({
+    rootRef,
+
+    date,
+    view,
+    firstDayOfWeek,
+
+    focusedDate: activeDate,
+    onFocusedDateChange: setFocusedDate,
+
+    onSelectDate: selectionEnabled
+      ? changeSelection
+      : undefined,
+
+    onDateChange,
+  })
+
   const handleDayClick = (clickedDate: CalendarDate) => {
+    setFocusedDate(clickedDate)
+
     if (selectionEnabled) {
       changeSelection(
         currentSelectedDate === clickedDate
@@ -181,6 +215,8 @@ function CalendarContent({
       data-theme={theme}
       data-accent={accent}
       data-view={view}
+      {...swipeHandlers}
+      {...keyboardNavigation}
     >
       <Toolbar
         view={view}
@@ -202,6 +238,7 @@ function CalendarContent({
             selectedDate={
               selectionEnabled ? currentSelectedDate : null
             }
+            focusedDate={activeDate}
           />
         )}
         {view === 'month' && (
@@ -210,6 +247,7 @@ function CalendarContent({
             selectedDate={
               selectionEnabled ? currentSelectedDate : null
             }
+            focusedDate={activeDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
@@ -220,6 +258,7 @@ function CalendarContent({
             selectedDate={
               selectionEnabled ? currentSelectedDate : null
             }
+            focusedDate={activeDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
@@ -230,6 +269,7 @@ function CalendarContent({
             selectedDate={
               selectionEnabled ? currentSelectedDate : null
             }
+            focusedDate={activeDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />

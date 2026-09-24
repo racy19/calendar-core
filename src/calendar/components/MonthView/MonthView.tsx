@@ -16,6 +16,7 @@ interface MonthViewProps {
   date: CalendarDate
   variant?: MonthViewVariant
   selectedDate?: CalendarDate | null
+  focusedDate?: CalendarDate
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
@@ -24,6 +25,7 @@ export function MonthView({
   date,
   variant = 'default',
   selectedDate = null,
+  focusedDate = null,
   onDayClick,
   renderDayContent,
 }: MonthViewProps) {
@@ -49,6 +51,7 @@ export function MonthView({
             isToday={isToday(day.date)}
             isCurrentMonth={day.isCurrentMonth}
             isSelected={selectedDate === day.date}
+            tabIndex={focusedDate === day.date ? 0 : -1}
             onClick={() => onDayClick?.(day.date)}
           >
             {renderDayContent?.(day.date)}

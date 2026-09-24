@@ -55,6 +55,7 @@
 
   /* Layout */
   --calendar-radius: 0.75rem;
+  --calendar-padding: 0.75rem;
   --calendar-spacing: 0.5rem;
 
   --calendar-day-min-height: 6.25rem;
@@ -87,6 +88,23 @@
   font-family: var(--calendar-font-family);
   font-size: var(--calendar-font-size);
 }
+
+.view {
+  width: 100%;
+  padding: var(--calendar-padding);
+  touch-action: pan-y;
+}
+
+@media screen and (max-width: 640px) {
+  .calendar {
+    border-radius: 0;
+  }
+  .view {
+    padding: 0;
+  }
+}
+
+/* Calendar themes and accents */
 
 /* Dark + gray */
 .calendar[data-theme='dark'] {
@@ -324,9 +342,4 @@
   --calendar-palette-6-text: #4c0519;
   --calendar-palette-6-soft: #881337;
   --calendar-palette-6-soft-text: #fda4af;
-}
-
-.view {
-  width: 100%;
-  touch-action: pan-y;
 }

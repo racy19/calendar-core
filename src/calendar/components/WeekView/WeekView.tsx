@@ -14,6 +14,7 @@ import { useCalendarContext } from '../../context'
 interface WeekViewProps {
   date: CalendarDate
   selectedDate?: CalendarDate | null
+  focusedDate?: CalendarDate
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
@@ -21,6 +22,7 @@ interface WeekViewProps {
 export function WeekView({
   date,
   selectedDate = null,
+  focusedDate = null,
   onDayClick,
   renderDayContent,
 }: WeekViewProps) {
@@ -42,6 +44,7 @@ export function WeekView({
             isToday={isToday(day.date)}
             onClick={() => onDayClick?.(day.date)}
             isSelected={selectedDate === day.date}
+            tabIndex={focusedDate === day.date ? 0 : -1}
           >
             {renderDayContent?.(day.date)}
           </DayCell>
