@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { getToday } from '../../core/date'
 import { formatPeriodLabel } from '../../core/format'
 import { getNextDate, getPreviousDate } from '../../core/navigation'
@@ -15,6 +15,9 @@ import { useCalendarKeyboardNavigation } from '../../hooks/useCalendarKeyboardNa
 import { isDateVisible } from '../../core/navigation/isDateVisible'
 
 interface CalendarProps {
+  className?: string
+  style?: CSSProperties
+  
   view: CalendarView
   date: CalendarDate
 
@@ -49,6 +52,8 @@ export function Calendar(props: CalendarProps) {
 }
 
 function CalendarContent({
+  className,
+  style,
   view,
   date,
   selectionEnabled = true,
@@ -207,7 +212,8 @@ function CalendarContent({
   return (
     <div
       ref={rootRef}
-      className={styles.calendar}
+      className={[styles.calendar, className].filter(Boolean).join(' ')}
+      style={style}
       data-theme={theme}
       data-accent={accent}
       data-view={view}

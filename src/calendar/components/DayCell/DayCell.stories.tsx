@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { DayCell } from './DayCell'
+import { withCalendarProvider } from '../../stories/withCalendarProvider'
 
 const meta = {
   title: 'Calendar/DayCell',
   component: DayCell,
+
+  decorators: [withCalendarProvider('month')],
 } satisfies Meta<typeof DayCell>
 
 export default meta
@@ -50,7 +53,19 @@ export const WithContent: Story = {
       date: '2026-09-12',
       day: 12,
     },
-    isToday: false,
+    isCurrentMonth: true,
+
+    children: <span>2 události</span>,
+  },
+}
+
+export const Selected: Story = {
+  args: {
+    day: {
+      date: '2026-09-12',
+      day: 12,
+    },
+    isSelected: true,
     isCurrentMonth: true,
   },
 }

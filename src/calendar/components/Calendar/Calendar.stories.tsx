@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useArgs } from 'storybook/preview-api'
 
 import { Calendar } from './Calendar'
+import type { CSSProperties } from 'react'
 
 const meta = {
   title: 'Calendar/Calendar',
@@ -58,5 +59,20 @@ export const Default: Story = {
         onDateChange={(date) => updateArgs({ date })}
       />
     )
+  },
+}
+
+export const CustomTheme: Story = {
+  ...Default,
+
+  args: {
+    ...Default.args,
+
+    style: {
+      '--calendar-primary': '#7c3aed',
+      '--calendar-primary-text': '#ffffff',
+      '--calendar-primary-soft': '#ede9fe',
+      '--calendar-primary-soft-text': '#6d28d9',
+    } as CSSProperties,
   },
 }
