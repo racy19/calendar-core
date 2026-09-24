@@ -1,4 +1,5 @@
 .day {
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   min-height: var(--calendar-day-min-height);
@@ -60,4 +61,52 @@
 
   line-height: 1;
   flex-shrink: 0;
+}
+
+.dayTrigger {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  width: 100%;
+  height: 100%;
+  padding: var(--calendar-day-padding);
+
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dayTrigger:focus-visible {
+  outline: none;
+}
+
+.dayContent {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-width: 0;
+
+  margin-top: var(--calendar-day-number-size);
+
+  pointer-events: none;
+}
+
+.dayContent :is(
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [data-calendar-interactive]
+) {
+  pointer-events: auto;
 }

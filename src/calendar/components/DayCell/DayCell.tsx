@@ -23,26 +23,31 @@ export function DayCell({
   onClick,
 }: DayCellProps) {
   return (
-    <button
-      type="button"
+    <div
       className={styles.day}
-
-      data-calendar-day
-      data-date={day.date}
-
       data-today={isToday}
       data-current-month={isCurrentMonth}
       data-selected={isSelected}
-
-      aria-pressed={isSelected}
-      tabIndex={tabIndex}
-      onClick={onClick}
     >
-      <span className={styles.dayNumber}>
-        {day.day}
-      </span>
+      <button
+        type="button"
+        className={styles.dayTrigger}
+        data-calendar-day
+        data-date={day.date}
+        aria-pressed={isSelected}
+        tabIndex={tabIndex}
+        onClick={onClick}
+      >
+        <span className={styles.dayNumber}>
+          {day.day}
+        </span>
+      </button>
 
-      {children}
-    </button>
+      {children != null && (
+        <div className={styles.dayContent}>
+          {children}
+        </div>
+      )}
+    </div>
   )
 }

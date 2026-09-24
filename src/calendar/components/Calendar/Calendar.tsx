@@ -128,10 +128,6 @@ function CalendarContent({
     focusedDate: activeDate,
     onFocusedDateChange: setFocusedDate,
 
-    onSelectDate: selectionEnabled
-      ? changeSelection
-      : undefined,
-
     onDateChange,
   })
 
@@ -215,7 +211,6 @@ function CalendarContent({
       data-theme={theme}
       data-accent={accent}
       data-view={view}
-      {...swipeHandlers}
       {...keyboardNavigation}
     >
       <Toolbar

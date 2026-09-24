@@ -24,7 +24,6 @@ interface UseCalendarKeyboardNavigationOptions {
 
   focusedDate: CalendarDate
 
-  onSelectDate?: (date: CalendarDate) => void
   onFocusedDateChange: (date: CalendarDate) => void
   onDateChange: (date: CalendarDate) => void
 }
@@ -35,7 +34,6 @@ export function useCalendarKeyboardNavigation({
   view,
   firstDayOfWeek,
   focusedDate,
-  onSelectDate,
   onFocusedDateChange,
   onDateChange,
 }: UseCalendarKeyboardNavigationOptions) {
@@ -77,35 +75,33 @@ export function useCalendarKeyboardNavigation({
   ])
 
   const handleFocusCapture = (
-  event: FocusEvent<HTMLDivElement>,
-) => {
-  if (!(event.target instanceof Element)) {
-    return
+    event: FocusEvent<HTMLDivElement>,
+  ) => {
+    if (!(event.target instanceof Element)) {
+      return
+    }
+
+    const dayElement = event.target.closest<HTMLElement>(
+      '[data-calendar-day]',
+    )
+
+    if (
+      !dayElement ||
+      !event.currentTarget.contains(dayElement)
+    ) {
+      return
+    }
+
+    const nextDate = dayElement.dataset.date
+
+    if (nextDate) {
+      onFocusedDateChange(nextDate)
+    }
   }
-
-  const dayElement = event.target.closest<HTMLElement>(
-    '[data-calendar-day]',
-  )
-
-  if (
-    !dayElement ||
-    !event.currentTarget.contains(dayElement)
-  ) {
-    return
-  }
-
-  const nextDate = dayElement.dataset.date
-
-  if (nextDate) {
-    onFocusedDateChange(nextDate)
-  }
-}
 
   const handleKeyDown = (
     event: KeyboardEvent<HTMLDivElement>,
   ) => {
-    event.preventDefault()
-
     const offsets: Record<string, number> = {
       ArrowLeft: -1,
       ArrowRight: 1,
@@ -115,11 +111,12 @@ export function useCalendarKeyboardNavigation({
 
     const offset = offsets[event.key]
 
+    // Ostatní klávesy necháme browseru.
     if (offset === undefined) {
       return
     }
 
-    // Only handle keyboard events originating from a DayCell.
+    // Šipky obsluhujeme pouze na tlačítku dne.
     if (!(event.target instanceof Element)) {
       return
     }
@@ -151,13 +148,16 @@ export function useCalendarKeyboardNavigation({
       return
     }
 
+    // Zabráníme scrollování stránky pomocí šipek.
     event.preventDefault()
 
+    // Připravíme přesun skutečného DOM fokusu.
     pendingFocusRef.current = nextDate
 
+    // Změníme fokusované datum, nikoliv vybrané datum.
     onFocusedDateChange(nextDate)
-    onSelectDate?.(nextDate)
 
+    // Pokud opustíme aktuální období, posuneme zobrazení.
     if (
       !isDateInPeriod(
         nextDate,
