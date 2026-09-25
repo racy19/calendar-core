@@ -7,7 +7,7 @@ import { DayCell } from '../DayCell'
 interface DayViewProps {
   date: CalendarDate
   selectedDate?: CalendarDate | null
-  focusedDate?: CalendarDate
+  focusedDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
@@ -35,6 +35,7 @@ export function DayView({
       <DayCell
         day={day}
         isSelected={selectedDate === date}
+        isFocused={focusedDate === date}
         isToday={isToday(date)}
         tabIndex={focusedDate === date ? 0 : -1}
         onClick={() => onDayClick?.(date)}

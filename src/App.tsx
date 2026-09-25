@@ -16,6 +16,8 @@ function App() {
       <Calendar
         view={view}
         date={date}
+        accent='green'
+        theme='dark'
         locale={resolvedLocale}
         onViewChange={setView}
         onDateChange={setDate}

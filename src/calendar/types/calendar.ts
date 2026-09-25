@@ -1,3 +1,5 @@
+import type { SVGProps } from "react"
+
 export type CalendarView = 'year' | 'month' | 'week' | 'day'
 
 /**
@@ -27,7 +29,7 @@ export type MonthViewVariant = 'default' | 'compact'
 
 export type CalendarTheme = 'light' | 'dark'
 
-export type CalendarAccent = 'gray' |'blue' | 'green'
+export type CalendarAccent = 'gray' | 'blue' | 'green'
 
 export interface CalendarTranslations {
   year: string
@@ -39,4 +41,8 @@ export interface CalendarTranslations {
 
   previousPeriod: string
   nextPeriod: string
+}
+
+export interface IconProps extends SVGProps<SVGSVGElement> {
+  size?: number
 }

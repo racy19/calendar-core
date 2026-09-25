@@ -1,5 +1,8 @@
 import { useCalendarContext } from '../../context'
 import type { CalendarView } from '../../types/calendar'
+import { CalendarIcon } from '../icons/CalendarIcon/CalendarIcon'
+import { ChevronLeftIcon } from '../icons/ChevronLeftIcon'
+import { ChevronRightIcon } from '../icons/ChevronRightIcon'
 
 import styles from './Toolbar.module.css'
 
@@ -38,21 +41,27 @@ export function Toolbar({
           <option value="day">{translations.day}</option>
         </select>
 
-        <button
-          type="button"
+        <div
           onClick={onToday}
         >
-          {translations.today}
-        </button>
+          <CalendarIcon
+            size='32'
+            secondDotPalette='primary'
+            disabled={view === 'day'}
+            onClick={onToday}
+            ariaLabel={translations.today}
+          />
+        </div>
       </div>
 
       <div className={styles.navigation}>
         <button
+          className={styles.navButton}
           type="button"
           onClick={onPrevious}
           aria-label={translations.previousPeriod}
         >
-          ‹
+          <ChevronLeftIcon size={12} />
         </button>
 
         <span className={styles.period}>
@@ -60,11 +69,12 @@ export function Toolbar({
         </span>
 
         <button
+          className={styles.navButton}
           type="button"
           onClick={onNext}
           aria-label={translations.nextPeriod}
         >
-          ›
+          <ChevronRightIcon size={12} />
         </button>
       </div>
 

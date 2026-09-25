@@ -9,6 +9,7 @@ interface DayCellProps {
   isCurrentMonth?: boolean
   children?: ReactNode
   isSelected?: boolean
+  isFocused?: boolean
   tabIndex?: 0 | -1
   onClick?: () => void
 }
@@ -19,6 +20,7 @@ export function DayCell({
   isCurrentMonth = true,
   children,
   isSelected = false,
+  isFocused = false,
   tabIndex = 0,
   onClick,
 }: DayCellProps) {
@@ -28,6 +30,7 @@ export function DayCell({
       data-today={isToday}
       data-current-month={isCurrentMonth}
       data-selected={isSelected}
+      data-focused={isFocused}
     >
       <button
         type="button"

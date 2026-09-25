@@ -101,13 +101,11 @@
   pointer-events: none;
 }
 
-.dayContent :is(
-  button,
+.dayContent :is(button,
   a,
   input,
   select,
   textarea,
-  [data-calendar-interactive]
-) {
+  [data-calendar-interactive]) {
   pointer-events: auto;
 }
