@@ -18,6 +18,9 @@ function App() {
         date={date}
         accent='green'
         theme='dark'
+        // arrowNavEnabled={false}
+        // selectionEnabled={false}
+        keySelectionEnabled={false}
         locale={resolvedLocale}
         onViewChange={setView}
         onDateChange={setDate}

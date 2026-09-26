@@ -22,7 +22,7 @@ interface UseCalendarKeyboardNavigationOptions {
   view: CalendarView
   firstDayOfWeek: FirstDayOfWeek
 
-  focusedDate: CalendarDate
+  focusedDate: CalendarDate | null
 
   onFocusedDateChange: (date: CalendarDate) => void
   onDateChange: (date: CalendarDate) => void

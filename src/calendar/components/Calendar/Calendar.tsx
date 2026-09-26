@@ -1,14 +1,33 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+  type ReactNode,
+} from 'react'
+
 import { getToday } from '../../core/date'
 import { formatPeriodLabel } from '../../core/format'
 import { getNextDate, getPreviousDate } from '../../core/navigation'
-import type { CalendarAccent, CalendarDate, CalendarTheme, CalendarView, FirstDayOfWeek } from '../../types/calendar'
+import type {
+  CalendarAccent,
+  CalendarDate,
+  CalendarTheme,
+  CalendarView,
+  FirstDayOfWeek,
+} from '../../types/calendar'
+
 import { DayView } from '../DayView'
 import { MonthView } from '../MonthView'
 import { Toolbar } from '../Toolbar'
 import { WeekView } from '../WeekView'
 import { YearView } from '../YearView/YearView'
+
 import styles from './Calendar.module.css'
+
 import { useSwipeNavigation } from '../../hooks/useSwipeNavigation'
 import { CalendarProvider, useCalendarContext } from '../../context'
 import { useCalendarKeyboardNavigation } from '../../hooks/useCalendarKeyboardNavigation'
@@ -17,13 +36,15 @@ import { isDateVisible } from '../../core/navigation/isDateVisible'
 interface CalendarProps {
   className?: string
   style?: CSSProperties
-  
+
   view: CalendarView
   date: CalendarDate
 
   selectionEnabled?: boolean
   selectedDate?: CalendarDate | null
   defaultSelectedDate?: CalendarDate | null
+  arrowNavEnabled?: boolean
+  keySelectionEnabled?: boolean
 
   theme?: CalendarTheme
   accent?: CalendarAccent
@@ -32,6 +53,7 @@ interface CalendarProps {
   locale?: string
 
   renderDayContent?: (date: CalendarDate) => ReactNode
+
   onViewChange: (view: CalendarView) => void
   onDateChange: (date: CalendarDate) => void
   onDayClick?: (date: CalendarDate) => void
@@ -59,6 +81,8 @@ function CalendarContent({
   selectionEnabled = true,
   selectedDate,
   defaultSelectedDate = null,
+  arrowNavEnabled = true,
+  keySelectionEnabled = true,
   theme = 'light',
   accent = 'gray',
   renderDayContent,
@@ -70,9 +94,10 @@ function CalendarContent({
   const {
     locale,
     firstDayOfWeek,
-  } = useCalendarContext();
+  } = useCalendarContext()
 
   /* locale resolution */
+
   const periodLabel = formatPeriodLabel(
     date,
     view,
@@ -81,6 +106,7 @@ function CalendarContent({
   )
 
   /* selection management */
+
   const rootRef = useRef<HTMLDivElement>(null)
 
   const [internalSelectedDate, setInternalSelectedDate] =
@@ -91,18 +117,22 @@ function CalendarContent({
       ? selectedDate
       : internalSelectedDate
 
-  const [focusedDate, setFocusedDate] = useState<CalendarDate>(
-    currentSelectedDate ?? date,
-  )
+  const [focusedDate, setFocusedDate] =
+    useState<CalendarDate | null>(
+      currentSelectedDate ?? null,
+    )
 
-  const activeDate = isDateVisible(
-    focusedDate,
-    date,
-    view,
-    firstDayOfWeek,
-  )
-    ? focusedDate
-    : date
+  const activeDate =
+    arrowNavEnabled &&
+      focusedDate !== null &&
+      isDateVisible(
+        focusedDate,
+        date,
+        view,
+        firstDayOfWeek,
+      )
+      ? focusedDate
+      : null
 
   const changeSelection = useCallback(
     (nextDate: CalendarDate | null) => {
@@ -123,6 +153,8 @@ function CalendarContent({
     ],
   )
 
+  /* keyboard navigation */
+
   const keyboardNavigation = useCalendarKeyboardNavigation({
     rootRef,
 
@@ -136,21 +168,141 @@ function CalendarContent({
     onDateChange,
   })
 
-  const handleDayClick = (clickedDate: CalendarDate) => {
-    setFocusedDate(clickedDate)
+  const handleCalendarKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ) => {
+    if (!keySelectionEnabled && event.key === 'Enter') {
+      const target = event.target
 
-    if (selectionEnabled) {
-      changeSelection(
-        currentSelectedDate === clickedDate
-          ? null
-          : clickedDate,
-      )
+      if (
+        target instanceof Element &&
+        target.closest('button[data-calendar-day]')
+      ) {
+        event.preventDefault()
+        return
+      }
+    }
+
+    if (arrowNavEnabled) {
+      keyboardNavigation.onKeyDown(event)
+    }
+  }
+
+  /* day click */
+
+  const handleDayClick = (clickedDate: CalendarDate) => {
+    const isSelected =
+      selectionEnabled &&
+      currentSelectedDate === clickedDate
+
+    if (isSelected) {
+      changeSelection(null)
+
+      // Pokud je focusedDate stejné jako clickedDate,
+      // zrušíme současně selection i focus.
+      //
+      // Pokud byl focus přesunut šipkami na jiné datum,
+      // zachováme ho.
+
+      if (focusedDate === clickedDate) {
+        setFocusedDate(null)
+
+        rootRef.current
+          ?.querySelector<HTMLButtonElement>(
+            `button[data-calendar-day][data-date="${clickedDate}"]`,
+          )
+          ?.blur()
+      }
+    } else {
+      if (arrowNavEnabled) {
+        setFocusedDate(clickedDate)
+      }
+
+      if (selectionEnabled) {
+        changeSelection(clickedDate)
+      }
     }
 
     onDayClick?.(clickedDate)
   }
 
-  /* nav handlers */
+  /* mouse focus management */
+
+  const handleDayMouseDownCapture = (
+    event: MouseEvent<HTMLDivElement>,
+  ) => {
+    if (!arrowNavEnabled || !selectionEnabled) {
+      return
+    }
+
+    const target = event.target
+
+    if (!(target instanceof Element)) {
+      return
+    }
+
+    const dayButton =
+      target.closest<HTMLButtonElement>(
+        'button[data-calendar-day]',
+      )
+
+    if (
+      !dayButton ||
+      !event.currentTarget.contains(dayButton)
+    ) {
+      return
+    }
+
+    // Pokud klikáme na selectedDate, ale focus už
+    // pomocí šipek přešel na jiné datum, zabráníme
+    // prohlížeči přesunout DOM focus zpět na selectedDate.
+
+    if (
+      dayButton.dataset.date === currentSelectedDate &&
+      focusedDate !== currentSelectedDate
+    ) {
+      event.preventDefault()
+    }
+  }
+
+  /* dismiss */
+
+  const handleDismiss = useCallback(() => {
+    if (focusedDate !== null) {
+      const isSameDate =
+        focusedDate === currentSelectedDate
+
+      setFocusedDate(null)
+
+      const focusedDay =
+        rootRef.current?.querySelector<HTMLButtonElement>(
+          'button[data-calendar-day]:focus',
+        )
+
+      focusedDay?.blur()
+
+      if (isSameDate && selectionEnabled) {
+        changeSelection(null)
+      }
+
+      return
+    }
+
+    if (
+      selectionEnabled &&
+      currentSelectedDate !== null
+    ) {
+      changeSelection(null)
+    }
+  }, [
+    focusedDate,
+    currentSelectedDate,
+    selectionEnabled,
+    changeSelection,
+  ])
+
+  /* navigation handlers */
+
   const handlePrevious = () => {
     onDateChange(getPreviousDate(date, view))
   }
@@ -168,56 +320,67 @@ function CalendarContent({
     onSwipeRight: handlePrevious,
   })
 
-  /* selection reset on outside click or escape key */
+  /* selection reset on Escape */
+
   useEffect(() => {
-    if (!selectionEnabled || currentSelectedDate === null) {
+    if (
+      !keySelectionEnabled ||
+      (
+        focusedDate === null &&
+        (
+          !selectionEnabled ||
+          currentSelectedDate === null
+        )
+      )
+    ) {
       return
     }
 
-    const handlePointerDown = (event: PointerEvent) => {
-      if (
-        rootRef.current &&
-        !rootRef.current.contains(event.target as Node)
-      ) {
-        changeSelection(null)
-      }
-    }
-
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') {
-        return
-      }
-
-      if (
-        rootRef.current?.contains(document.activeElement)
-      ) {
-        changeSelection(null)
+      if (event.key === 'Escape') {
+        handleDismiss()
       }
     }
 
-    document.addEventListener('pointerdown', handlePointerDown)
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener(
+      'keydown',
+      handleKeyDown,
+    )
 
     return () => {
-      document.removeEventListener('pointerdown', handlePointerDown)
-      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener(
+        'keydown',
+        handleKeyDown,
+      )
     }
   }, [
+    keySelectionEnabled,
+    focusedDate,
     selectionEnabled,
     currentSelectedDate,
-    changeSelection,
+    handleDismiss,
   ])
 
   /* render */
+
   return (
     <div
       ref={rootRef}
-      className={[styles.calendar, className].filter(Boolean).join(' ')}
+      className={[
+        styles.calendar,
+        className,
+      ].filter(Boolean).join(' ')}
       style={style}
       data-theme={theme}
       data-accent={accent}
       data-view={view}
-      {...keyboardNavigation}
+      onMouseDownCapture={handleDayMouseDownCapture}
+      onKeyDown={handleCalendarKeyDown}
+      onFocusCapture={
+        arrowNavEnabled
+          ? keyboardNavigation.onFocusCapture
+          : () => { }
+      }
     >
       <Toolbar
         view={view}
@@ -237,38 +400,49 @@ function CalendarContent({
             date={date}
             onDayClick={handleDayClick}
             selectedDate={
-              selectionEnabled ? currentSelectedDate : null
+              selectionEnabled
+                ? currentSelectedDate
+                : null
             }
             focusedDate={activeDate}
           />
         )}
+
         {view === 'month' && (
           <MonthView
             date={date}
             selectedDate={
-              selectionEnabled ? currentSelectedDate : null
+              selectionEnabled
+                ? currentSelectedDate
+                : null
             }
             focusedDate={activeDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
         )}
+
         {view === 'week' && (
           <WeekView
             date={date}
             selectedDate={
-              selectionEnabled ? currentSelectedDate : null
+              selectionEnabled
+                ? currentSelectedDate
+                : null
             }
             focusedDate={activeDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
         )}
+
         {view === 'day' && (
           <DayView
             date={date}
             selectedDate={
-              selectionEnabled ? currentSelectedDate : null
+              selectionEnabled
+                ? currentSelectedDate
+                : null
             }
             focusedDate={activeDate}
             renderDayContent={renderDayContent}

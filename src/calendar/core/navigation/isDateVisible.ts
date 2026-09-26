@@ -8,11 +8,13 @@ import { getMonthDays } from '../month'
 import { getWeekDays } from '../week'
 
 export function isDateVisible(
-  targetDate: CalendarDate,
+  targetDate: CalendarDate | null,
   date: CalendarDate,
   view: CalendarView,
   firstDayOfWeek: FirstDayOfWeek,
 ): boolean {
+  if (!targetDate) return false;
+
   switch (view) {
     case 'year':
       return targetDate.slice(0, 4) === date.slice(0, 4)
