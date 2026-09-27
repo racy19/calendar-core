@@ -41,9 +41,6 @@ export function Toolbar({
           <option value="day">{translations.day}</option>
         </select>
 
-        <div
-          onClick={onToday}
-        >
           <CalendarIcon
             size='32'
             secondDotPalette='primary'
@@ -51,7 +48,6 @@ export function Toolbar({
             onClick={onToday}
             ariaLabel={translations.today}
           />
-        </div>
       </div>
 
       <div className={styles.navigation}>

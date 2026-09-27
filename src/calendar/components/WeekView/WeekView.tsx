@@ -15,6 +15,7 @@ interface WeekViewProps {
   date: CalendarDate
   selectedDate?: CalendarDate | null
   focusedDate?: CalendarDate | null
+  tabStopDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
@@ -23,6 +24,7 @@ export function WeekView({
   date,
   selectedDate = null,
   focusedDate = null,
+  tabStopDate,
   onDayClick,
   renderDayContent,
 }: WeekViewProps) {
@@ -37,19 +39,27 @@ export function WeekView({
         locale={locale}
       />
       <div className={styles.week}>
-        {days.map((day) => (
-          <DayCell
-            key={day.date}
-            day={day}
-            isToday={isToday(day.date)}
-            onClick={() => onDayClick?.(day.date)}
-            isSelected={selectedDate === day.date}
-            isFocused={focusedDate === day.date}
-            tabIndex={focusedDate === day.date ? 0 : -1}
-          >
-            {renderDayContent?.(day.date)}
-          </DayCell>
-        ))}
+        {days.map((day) => {
+          const tabIndex =
+            tabStopDate === undefined ||
+              tabStopDate === day.date
+              ? 0
+              : -1
+
+          return (
+            <DayCell
+              key={day.date}
+              day={day}
+              isToday={isToday(day.date)}
+              isSelected={selectedDate === day.date}
+              isFocused={focusedDate === day.date}
+              tabIndex={tabIndex}
+              onClick={() => onDayClick?.(day.date)}
+            >
+              {renderDayContent?.(day.date)}
+            </DayCell>
+          )
+        })}
       </div>
     </>
   )

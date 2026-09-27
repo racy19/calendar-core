@@ -14,6 +14,7 @@ interface YearViewProps {
   date: CalendarDate
   selectedDate?: CalendarDate | null
   focusedDate?: CalendarDate | null
+  tabStopDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
 }
 
@@ -21,6 +22,7 @@ export function YearView({
   date,
   selectedDate = null,
   focusedDate = null,
+  tabStopDate,
   onDayClick,
 }: YearViewProps) {
   const { locale } = useCalendarContext();
@@ -52,8 +54,10 @@ export function YearView({
             <MonthView
               date={month}
               variant="compact"
+              showAdjacentMonthsDays={false}
               selectedDate={selectedDate}
               focusedDate={focusedDate}
+              tabStopDate={tabStopDate}
               onDayClick={onDayClick}
             />
           </section>

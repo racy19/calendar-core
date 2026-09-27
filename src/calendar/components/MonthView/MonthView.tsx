@@ -15,8 +15,10 @@ import { useCalendarContext } from '../../context'
 interface MonthViewProps {
   date: CalendarDate
   variant?: MonthViewVariant
+  showAdjacentMonthsDays?: boolean
   selectedDate?: CalendarDate | null
   focusedDate?: CalendarDate | null
+  tabStopDate?: CalendarDate | null
   onDayClick?: (date: CalendarDate) => void
   renderDayContent?: (date: CalendarDate) => ReactNode
 }
@@ -24,8 +26,10 @@ interface MonthViewProps {
 export function MonthView({
   date,
   variant = 'default',
+  showAdjacentMonthsDays = true,
   selectedDate = null,
   focusedDate = null,
+  tabStopDate,
   onDayClick,
   renderDayContent,
 }: MonthViewProps) {
@@ -48,20 +52,42 @@ export function MonthView({
       />
 
       <div className={styles.month}>
-        {days.map((day) => (
-          <DayCell
-            key={day.date}
-            day={day}
-            isToday={isToday(day.date)}
-            isCurrentMonth={day.isCurrentMonth}
-            isSelected={selectedDate === day.date}
-            isFocused={focusedDate === day.date}
-            tabIndex={focusedDate === day.date ? 0 : -1}
-            onClick={() => onDayClick?.(day.date)}
-          >
-            {renderDayContent?.(day.date)}
-          </DayCell>
-        ))}
+        {days.map((day) => {
+          const isCurrentPeriodDay = variant !== 'compact' || day.isCurrentMonth;
+
+          /* props */
+          const isFocused = isCurrentPeriodDay && focusedDate === day.date;
+          const isTabStop =
+            isCurrentPeriodDay &&
+            (tabStopDate === undefined || tabStopDate === day.date);
+
+          const tabIndex = isTabStop ? 0 : -1;
+
+          if (showAdjacentMonthsDays === false && !day.isCurrentMonth) {
+            return (
+              <div
+                key={day.date}
+                className={styles.emptyCell}
+                aria-hidden="true"
+              />
+            )
+          }
+
+          return (
+            <DayCell
+              key={day.date}
+              day={day}
+              isToday={isToday(day.date)}
+              isCurrentMonth={day.isCurrentMonth}
+              isSelected={selectedDate === day.date}
+              isFocused={isFocused}
+              tabIndex={tabIndex}
+              onClick={() => onDayClick?.(day.date)}
+            >
+              {renderDayContent?.(day.date)}
+            </DayCell>
+          )
+        })}
       </div>
     </div>
   )

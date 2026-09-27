@@ -1,11 +1,11 @@
 
 import {
   useCallback,
-  useEffect,
   useRef,
   useState,
   type CSSProperties,
   type MouseEvent,
+  type KeyboardEvent,
   type ReactNode,
 } from 'react'
 
@@ -97,20 +97,12 @@ function CalendarContent({
   } = useCalendarContext()
 
   /* locale resolution */
-
-  const periodLabel = formatPeriodLabel(
-    date,
-    view,
-    locale,
-    firstDayOfWeek,
-  )
+  const periodLabel = formatPeriodLabel(date, view, locale, firstDayOfWeek);
 
   /* selection management */
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  const rootRef = useRef<HTMLDivElement>(null)
-
-  const [internalSelectedDate, setInternalSelectedDate] =
-    useState<CalendarDate | null>(defaultSelectedDate)
+  const [internalSelectedDate, setInternalSelectedDate] = useState<CalendarDate | null>(defaultSelectedDate);
 
   const currentSelectedDate =
     selectedDate !== undefined
@@ -122,17 +114,24 @@ function CalendarContent({
       currentSelectedDate ?? null,
     )
 
+  const isFocusedDateVisible = isDateVisible(focusedDate, date, view, firstDayOfWeek);
+
   const activeDate =
-    arrowNavEnabled &&
-      focusedDate !== null &&
-      isDateVisible(
-        focusedDate,
-        date,
-        view,
-        firstDayOfWeek,
-      )
+    arrowNavEnabled && focusedDate !== null && isFocusedDateVisible
       ? focusedDate
       : null
+
+  const tabStopDate =
+    activeDate ??
+    (
+      selectionEnabled &&
+        currentSelectedDate !== null &&
+        isFocusedDateVisible
+        ? currentSelectedDate
+        : date
+    )
+
+  const rovingTabStopDate = arrowNavEnabled ? tabStopDate : undefined;
 
   const changeSelection = useCallback(
     (nextDate: CalendarDate | null) => {
@@ -168,28 +167,7 @@ function CalendarContent({
     onDateChange,
   })
 
-  const handleCalendarKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>,
-  ) => {
-    if (!keySelectionEnabled && event.key === 'Enter') {
-      const target = event.target
-
-      if (
-        target instanceof Element &&
-        target.closest('button[data-calendar-day]')
-      ) {
-        event.preventDefault()
-        return
-      }
-    }
-
-    if (arrowNavEnabled) {
-      keyboardNavigation.onKeyDown(event)
-    }
-  }
-
   /* day click */
-
   const handleDayClick = (clickedDate: CalendarDate) => {
     const isSelected =
       selectionEnabled &&
@@ -197,12 +175,6 @@ function CalendarContent({
 
     if (isSelected) {
       changeSelection(null)
-
-      // Pokud je focusedDate stejné jako clickedDate,
-      // zrušíme současně selection i focus.
-      //
-      // Pokud byl focus přesunut šipkami na jiné datum,
-      // zachováme ho.
 
       if (focusedDate === clickedDate) {
         setFocusedDate(null)
@@ -227,7 +199,6 @@ function CalendarContent({
   }
 
   /* mouse focus management */
-
   const handleDayMouseDownCapture = (
     event: MouseEvent<HTMLDivElement>,
   ) => {
@@ -253,10 +224,6 @@ function CalendarContent({
       return
     }
 
-    // Pokud klikáme na selectedDate, ale focus už
-    // pomocí šipek přešel na jiné datum, zabráníme
-    // prohlížeči přesunout DOM focus zpět na selectedDate.
-
     if (
       dayButton.dataset.date === currentSelectedDate &&
       focusedDate !== currentSelectedDate
@@ -266,7 +233,6 @@ function CalendarContent({
   }
 
   /* dismiss */
-
   const handleDismiss = useCallback(() => {
     if (focusedDate !== null) {
       const isSameDate =
@@ -301,8 +267,72 @@ function CalendarContent({
     changeSelection,
   ])
 
-  /* navigation handlers */
+  const handleCalendarKeyDown = (
+  event: KeyboardEvent<HTMLDivElement>,
+) => {
+  if (event.defaultPrevented) {
+    return
+  }
 
+  const target = event.target
+
+  if (!(target instanceof Element)) {
+    return
+  }
+
+  const isDayButton = Boolean(
+    target.closest('button[data-calendar-day]'),
+  )
+
+  // ESCAPE
+  if (event.key === 'Escape') {
+    if (
+      target.closest(
+        'input, textarea, select, [contenteditable="true"], [role="dialog"]',
+      )
+    ) {
+      return
+    }
+
+    const hasFocus = focusedDate !== null
+
+    const hasSelection =
+      selectionEnabled &&
+      currentSelectedDate !== null
+
+    if (!hasFocus && !hasSelection) {
+      return
+    }
+
+    handleDismiss()
+
+    event.preventDefault()
+    event.stopPropagation()
+
+    event.currentTarget.focus({
+      preventScroll: true,
+    })
+
+    return
+  }
+
+  // ENTER + SPACE
+  if (
+    isDayButton &&
+    !keySelectionEnabled &&
+    (event.key === 'Enter' || event.key === ' ')
+  ) {
+    event.preventDefault()
+    return
+  }
+
+  // ARROWS
+  if (arrowNavEnabled) {
+    keyboardNavigation.onKeyDown(event)
+  }
+}
+
+  /* navigation handlers */
   const handlePrevious = () => {
     onDateChange(getPreviousDate(date, view))
   }
@@ -320,49 +350,7 @@ function CalendarContent({
     onSwipeRight: handlePrevious,
   })
 
-  /* selection reset on Escape */
-
-  useEffect(() => {
-    if (
-      !keySelectionEnabled ||
-      (
-        focusedDate === null &&
-        (
-          !selectionEnabled ||
-          currentSelectedDate === null
-        )
-      )
-    ) {
-      return
-    }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        handleDismiss()
-      }
-    }
-
-    document.addEventListener(
-      'keydown',
-      handleKeyDown,
-    )
-
-    return () => {
-      document.removeEventListener(
-        'keydown',
-        handleKeyDown,
-      )
-    }
-  }, [
-    keySelectionEnabled,
-    focusedDate,
-    selectionEnabled,
-    currentSelectedDate,
-    handleDismiss,
-  ])
-
   /* render */
-
   return (
     <div
       ref={rootRef}
@@ -405,6 +393,7 @@ function CalendarContent({
                 : null
             }
             focusedDate={activeDate}
+            tabStopDate={rovingTabStopDate}
           />
         )}
 
@@ -417,6 +406,7 @@ function CalendarContent({
                 : null
             }
             focusedDate={activeDate}
+            tabStopDate={rovingTabStopDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
@@ -431,6 +421,7 @@ function CalendarContent({
                 : null
             }
             focusedDate={activeDate}
+            tabStopDate={rovingTabStopDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
@@ -445,6 +436,7 @@ function CalendarContent({
                 : null
             }
             focusedDate={activeDate}
+            tabStopDate={rovingTabStopDate}
             renderDayContent={renderDayContent}
             onDayClick={handleDayClick}
           />
