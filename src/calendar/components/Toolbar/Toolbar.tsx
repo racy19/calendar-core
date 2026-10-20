@@ -9,6 +9,7 @@ import styles from './Toolbar.module.css'
 interface ToolbarProps {
   view: CalendarView
   periodLabel: string
+  todayDisabled?: boolean
 
   onViewChange: (view: CalendarView) => void
   onPrevious: () => void
@@ -19,6 +20,7 @@ interface ToolbarProps {
 export function Toolbar({
   view,
   periodLabel,
+  todayDisabled = true,
   onViewChange,
   onPrevious,
   onToday,
@@ -44,7 +46,7 @@ export function Toolbar({
           <CalendarIcon
             size='32'
             secondDotPalette='primary'
-            disabled={view === 'day'}
+            disabled={todayDisabled}
             onClick={onToday}
             ariaLabel={translations.today}
           />

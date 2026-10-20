@@ -3,6 +3,7 @@ import type {
   CalendarView,
   FirstDayOfWeek,
 } from '../../types/calendar'
+import { parseCalendarDate } from '../date';
 
 import { getMonthDays } from '../month'
 import { getWeekDays } from '../week'
@@ -12,6 +13,7 @@ export function isDateVisible(
   date: CalendarDate,
   view: CalendarView,
   firstDayOfWeek: FirstDayOfWeek,
+  considerAdjacentDays = true,
 ): boolean {
   if (!targetDate) return false;
 
@@ -20,9 +22,10 @@ export function isDateVisible(
       return targetDate.slice(0, 4) === date.slice(0, 4)
 
     case 'month':
-      return getMonthDays(date, firstDayOfWeek).some(
-        (day) => day.date === targetDate,
-      )
+      return considerAdjacentDays
+        ? getMonthDays(date, firstDayOfWeek).some((day) => day.date === targetDate)
+        : parseCalendarDate(targetDate).getFullYear() === parseCalendarDate(date).getFullYear() &&
+        parseCalendarDate(targetDate).getMonth() === parseCalendarDate(date).getMonth();
 
     case 'week':
       return getWeekDays(date, firstDayOfWeek).some(

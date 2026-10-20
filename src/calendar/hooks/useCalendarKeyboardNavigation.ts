@@ -4,6 +4,7 @@ import {
   type KeyboardEvent,
   type RefObject,
   type FocusEvent,
+  useCallback,
 } from 'react'
 
 import type {
@@ -46,14 +47,7 @@ export function useCalendarKeyboardNavigation({
       return
     }
 
-    if (
-      !isDateInPeriod(
-        targetDate,
-        date,
-        view,
-        firstDayOfWeek,
-      )
-    ) {
+    if (!isDateInPeriod(targetDate, date, view, firstDayOfWeek,)) {
       return
     }
 
@@ -158,20 +152,18 @@ export function useCalendarKeyboardNavigation({
     onFocusedDateChange(nextDate)
 
     // Pokud opustíme aktuální období, posuneme zobrazení.
-    if (
-      !isDateInPeriod(
-        nextDate,
-        date,
-        view,
-        firstDayOfWeek,
-      )
-    ) {
+    if (!isDateInPeriod(nextDate, date, view, firstDayOfWeek,)) {
       onDateChange(nextDate)
     }
   }
 
+  const cancelPendingFocus = useCallback(() => {
+    pendingFocusRef.current = null
+  }, [])
+
   return {
     onKeyDown: handleKeyDown,
     onFocusCapture: handleFocusCapture,
+    cancelPendingFocus,
   }
 }
